@@ -37,7 +37,6 @@ passport.use(
       //find the user in db.
       User.findById(jwtPayload.user._id)
         .then((user) => {
-          req.user = user;
           return cb(null, user);
         })
         .catch((err) => {
@@ -54,9 +53,8 @@ passport.use(
       clientSecret: process.env.FACEBOOK_SECRET,
       callbackURL: process.env.BASE_SERVER_URL + '/api/facebook/callback',
       profileFields: ['id', 'first_name', 'last_name', 'email', 'picture'],
-      passReqToCallback: true,
     },
-    function (req, accessToken, refreshToken, profile, done) {
+    function (accessToken, refreshToken, profile, done) {
       // https://nodejs.dev/learn/understanding-process-nexttick
       process.nextTick(async () => {
         // User could not have an email associated to its account, so we return an error.
@@ -75,7 +73,6 @@ passport.use(
             profilePicUrl: profile._json.picture.data.url,
           },
           function (error, user) {
-            req.user = user;
             return done(error, user);
           }
         );

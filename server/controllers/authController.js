@@ -6,11 +6,11 @@ const passport = require('passport');
 
 exports.register = [
   // Sanitize data.
-  body('firstname', 'Firstname must be inserted')
+  body('first_name', 'Firstname must be inserted')
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('lastname', 'Lastname must be inserted')
+  body('last_name', 'Lastname must be inserted')
     .trim()
     .isLength({ min: 1 })
     .escape(),
@@ -35,8 +35,8 @@ exports.register = [
       const user = new User({
         email: req.body.email,
         password: pw,
-        first_name: req.body.firstname,
-        last_name: req.body.lastname,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
       });
 
       user.save((err) => {
