@@ -28,7 +28,7 @@ exports.register = [
       res.status(400).json({
         errors: errors.array(),
         msg: foundEmail
-          ? 'The email already has an account linket to it'
+          ? 'The email already has an account linked to it'
           : 'The email or password are invalid.',
       });
     } else {
@@ -47,12 +47,11 @@ exports.register = [
   },
 ];
 
-exports.login_local = function (req, res, next) {
+exports.login_local = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      const error = new Error('User does not exist');
       return res.status(403).json({
-        error,
+        msg: 'User does not exist',
         info,
       });
     }
@@ -64,6 +63,8 @@ exports.login_local = function (req, res, next) {
         expiresIn: '1d',
       });
 
+      user = user.toObject();
+      delete user.password;
       return res.status(200).json({ user, token });
     });
   })(req, res, next);
@@ -72,9 +73,7 @@ exports.login_local = function (req, res, next) {
 exports.login_facebook = (req, res, next) => {
   passport.authenticate('facebook', { session: false }, (err, user, info) => {
     if (err || !user) {
-      const error = new Error('User does not exist');
       return res.status(403).json({
-        error,
         info,
       });
     }
