@@ -2,6 +2,7 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const morgan = require('morgan');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -16,6 +17,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+
+// Sets up path to upload images.
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Routes setup
 const userRouter = require('./routes/userRouter');
