@@ -20,7 +20,7 @@ app.use(morgan('dev'));
 // Routes setup
 const userRouter = require('./routes/userRouter');
 const postsRouter = require('./routes/postRouter');
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use('/api/posts', postsRouter);
 
 // Errors handlers
