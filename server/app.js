@@ -21,6 +21,10 @@ app.use(morgan('dev'));
 // Sets up path to upload images.
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// Initializes passport.
+const passport = require('./config/passport');
+app.use(passport.initialize());
+
 // Routes setup
 const userRouter = require('./routes/userRouter');
 const postsRouter = require('./routes/postRouter');
