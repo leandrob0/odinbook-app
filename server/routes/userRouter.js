@@ -15,7 +15,7 @@ router.post('/register', authController.register);
 router.post('/login/local', authController.login_local);
 
 // POST Logs in a new user with the facebook method.
-router.post('/login/facebook', authController.login_facebook);
+router.get('/login/facebook', authController.login_facebook);
 
 //
 //  USERS PATHS
