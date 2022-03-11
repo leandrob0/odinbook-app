@@ -45,6 +45,7 @@ passport.use(
       //find the user in db.
       User.findById(jwtPayload.user._id)
         .then((user) => {
+          req.user = user;
           return cb(null, user);
         })
         .catch((err) => {
@@ -79,6 +80,9 @@ passport.use(
             last_name: profile._json.last_name,
             email: profile._json.email,
             profilePicUrl: profile._json.picture.data.url,
+            friends: [],
+            posts: [],
+            friendRequests: []
           },
           function (error, user) {
             return done(error, user);
