@@ -3,7 +3,7 @@ const User = require('../models/user');
 //const { body, validationResult } = require('express-validator');
 
 exports.all_users = async (req, res) => {
-  const users = await User.find({}).populate('friends');
+  const users = await User.find({}).select('+password').populate('friends');
   res.status(200).json({ users });
 };
 
@@ -11,22 +11,24 @@ exports.friend_request = async (req, res) => {
   const id = req.body.id;
   // Searches for the friend that i want to add.
   const friend = await User.findById(id);
-
   // Verify that the friend request has not been sent before (is not on pending).
   const found = friend.find((val) => val._id.toHexString() === id);
-  if (found)
+  if (found || !friend)
     return res.status(404).json({
-      msg: 'A request to ' + friend.first_name + ' was already sent.',
+      msg:
+        'A request to ' +
+        friend.first_name +
+        // eslint-disable-next-line quotes
+        " was already sent or the user doens't exist.",
     });
 
   friend.friendRequests = friend.friendRequests.concat(req.user._id);
   // Update its friendRequests array with the id of the user that sent the request.
-  const user = await User.findByIdAndUpdate(req.body.id, friend, {
+  const user = await User.findByIdAndUpdate(id, friend, {
     new: true,
   });
-  console.log(user);
   res.status(200).json({
-    msg: `Friend request sent succesfully to ${friend.first_name} ${friend.last_name}`,
+    msg: `Friend request sent succesfully to ${user.first_name} ${user.last_name}`,
   });
 };
 
