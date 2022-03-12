@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 //const { body, validationResult } = require('express-validator');
 
+// This will work for the searching later, probably will have an state that saves the users for searching.
 exports.all_users = async (req, res) => {
-  const users = await User.find({}).select('+password').populate('friends');
+  const users = await User.find({});
   res.status(200).json({ users });
 };
 
@@ -52,7 +53,9 @@ exports.handle_request = async (req, res) => {
   if (findRequest === -1) {
     return res
       .status(406)
-      .json({ msg: 'The user did not send a friend request or the request was canceled.' });
+      .json({
+        msg: 'The user did not send a friend request or the request was canceled.',
+      });
   }
   // The user that sent the request was deleted.
   if (!userSending) {
