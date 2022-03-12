@@ -30,6 +30,7 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
+    "mongodb-memory-server": "^8.4.0",
     "nodemon": "^2.0.15"
   }
 }

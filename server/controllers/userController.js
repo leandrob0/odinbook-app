@@ -3,7 +3,7 @@ const User = require('../models/user');
 //const { body, validationResult } = require('express-validator');
 
 exports.all_users = async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate('friends');
   res.status(200).json({ users });
 };
 
