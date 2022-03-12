@@ -58,7 +58,6 @@ exports.handle_request = async (req, res) => {
   }
 
   // Handles if the request was accepted or not.
-  // Probably want this to be in its own module.
   if (status) {
     // Updates both users friends array if accepted.
     userAccepting.friends = userAccepting.friends.concat(
