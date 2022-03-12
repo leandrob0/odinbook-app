@@ -70,7 +70,7 @@ passport.use(
         if (!profile._json.email) {
           return done(null, false, {
             message:
-              "Facebook account doens't have an email associated, please log in using other methods",
+              'Facebook account doens\'t have an email associated, please log in using other methods',
           });
         }
         User.findOrCreate(
@@ -82,7 +82,7 @@ passport.use(
             profilePicUrl: profile._json.picture.data.url,
             friends: [],
             posts: [],
-            friendRequests: []
+            friendRequests: [],
           },
           function (error, user) {
             return done(error, user);

@@ -37,7 +37,6 @@ exports.register = [
         password: pw,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        posts: [],
         friends: [],
         friendRequests: []
       });
