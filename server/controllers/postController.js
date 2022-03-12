@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-//const User = require('../models/user');
+const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 
 exports.create_post = [
@@ -30,5 +30,16 @@ exports.create_post = [
   },
 ];
 
-/* exports.friends_posts = async (req, res) => {
-}; */
+exports.friends_posts = async (req, res) => {
+  const friends = await User.find({ friends: req.user._id });
+  const postsFromSelf = await Post.find({ author: req.user_id });
+  const promises = friends.map(async (friend) => {
+    const posts = await Post.find({ author: friend._id });
+    return posts;
+  });
+  const friendsPosts = await Promise.all(promises);
+
+  res
+    .status(200)
+    .json({ friendsPosts: friendsPosts, selfPosts: postsFromSelf });
+};

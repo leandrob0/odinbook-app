@@ -8,12 +8,12 @@ exports.all_users = async (req, res) => {
 };
 
 exports.friend_request = async (req, res) => {
-  const id = req.body.id;
+  const id = req.params.id;
   // Searches for the friend that i want to add.
   const friend = await User.findById(id);
   // Verify that the friend request has not been sent before (is not on pending).
-  const found = friend.find((val) => val._id.toHexString() === id);
-  if (found || !friend)
+  const found = friend.friends.findIndex((val) => val._id.toHexString() === id);
+  if (found !== -1 || !friend)
     return res.status(404).json({
       msg:
         'A request to ' +
@@ -35,24 +35,26 @@ exports.friend_request = async (req, res) => {
 exports.handle_request = async (req, res) => {
   // The frontend will pass if the user accepted the request or not.
   const status = req.body.status;
-  const requestHandled = req.body.id;
+  const requestHandled = req.params.id;
 
-  if (!status || !requestHandled) {
+  if (!status) {
     return res.status(404).json({
-      msg: 'An acceptance and an id for the user that you want to handle are needed.',
+      msg: 'An acceptance status must be sent.',
     });
   }
 
   let userAccepting = await User.findById(req.user._id);
   let userSending = await User.findById(requestHandled);
-  const findRequest = userAccepting.friendRequests.find(
+  const findRequest = userAccepting.friendRequests.findIndex(
     (id) => id.toHexString() === requestHandled
   );
-  if (!findRequest) {
+  // Didn't found the request on the user that is accepting it.
+  if (findRequest === -1) {
     return res
       .status(406)
-      .json({ msg: 'The user did not send a friend request.' });
+      .json({ msg: 'The user did not send a friend request or the request was canceled.' });
   }
+  // The user that sent the request was deleted.
   if (!userSending) {
     return res.status(404).json({
       msg: 'The user from which you are trying to accept a request was deleted.',
