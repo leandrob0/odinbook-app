@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { registerUser } from '../../services/users';
 
 const Register = ({ setModalOpen }) => {
   const [registerForm, setRegisterForm] = useState({
@@ -15,14 +16,18 @@ const Register = ({ setModalOpen }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    /* const body = {
+    const body = {
       ...registerForm,
     };
 
     // service to submit the post request.
-    // On error i should display it with an error state. */
+    // On error i should display it with an error state.
+    await registerUser(body);
+
+    // If no error close the modal
+    setModalOpen(false);
   };
 
   return (
@@ -31,6 +36,7 @@ const Register = ({ setModalOpen }) => {
       className="h-screen w-full bg-white bg-opacity-70 flex justify-center items-center absolute"
     >
       <form
+        onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => handleSubmit(e)}
         className="m-4 border rounded bg-white shadow-md flex flex-col items-center"
       >

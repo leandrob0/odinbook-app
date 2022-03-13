@@ -5,10 +5,9 @@ import Homepage from './components/pages/Homepage';
 function App() {
   return (
     <BrowserRouter>
-      <Homepage />
-      {/* <Routes>
-        <Route exact path="/register" element={<Register />} />
-      </Routes> */}
+      <Routes>
+        <Route exact path="/" element={<Homepage/>}/>
+      </Routes>
     </BrowserRouter>
   );
 }
