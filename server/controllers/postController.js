@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
+const { mergeAndSort } = require('../helpers/mergeAndSort');
 
 exports.create_post = [
   body('text', 'Posts text must be at least 1 character long')
@@ -32,14 +33,18 @@ exports.create_post = [
 
 exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
-  const postsFromSelf = await Post.find({ author: req.user_id }).populate('author');
+  const postsFromSelf = await Post.find({ author: req.user_id }).populate(
+    'author'
+  );
   const promises = friends.map(async (friend) => {
     const posts = await Post.find({ author: friend._id }).populate('author');
     return posts;
   });
   const friendsPosts = await Promise.all(promises);
 
+  const allPostsSortedAndDateFormated = mergeAndSort(friendsPosts,postsFromSelf);
+
   res
     .status(200)
-    .json({ friendsPosts: friendsPosts, selfPosts: postsFromSelf });
+    .json({ posts: allPostsSortedAndDateFormated });
 };
