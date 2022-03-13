@@ -30,7 +30,7 @@ exports.create_post = [
   },
 ];
 
-exports.friends_posts = async (req, res) => {
+exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
   const postsFromSelf = await Post.find({ author: req.user_id }).populate('author');
   const promises = friends.map(async (friend) => {
