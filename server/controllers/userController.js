@@ -92,5 +92,5 @@ exports.handle_request = async (req, res) => {
     userAccepting,
     { new: true }
   );
-  res.status(200).json({ users: [newUserAccepting, newUserSending] });
+  res.status(200).json({ user: newUserAccepting });
 };
