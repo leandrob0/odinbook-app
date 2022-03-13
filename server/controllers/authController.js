@@ -75,7 +75,7 @@ exports.login_facebook = (req, res, next) => {
   passport.authenticate('facebook', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(403).json({
-        info,
+        msg: info.message,
       });
     }
 
