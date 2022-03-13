@@ -27,7 +27,7 @@ const Homepage = () => {
       </div>
       <footer className='bg-white text-gray-500 text-xs absolute inset-x-0 bottom-0 flex flex-wrap justify-between items-center'>
         <div className='p-1'>This site was made with the sole purpose of learning, no pishing intended</div>
-        <div className='p-1'>Made by Leandro Bovino and ...</div>
+        <div className='p-1'>Made by <a href='https://www.linkedin.com/in/lb0' target='_blank'>Leandro Bovino</a> and <a href="https://www.linkedin.com/in/julio-luis-dechert-196182213/" target="_blank">Julio Detchert</a></div>
       </footer>
     </main>
   );
