@@ -57,7 +57,7 @@ const Homepage = () => {
           </a>{' '}
           and{' '}
           <a
-            href="https://www.linkedin.com/in/julio-luis-dechert-196182213/"
+            href="https://www.linkedin.com/in/jld1"
             rel="noreferrer"
             target="_blank"
           >
