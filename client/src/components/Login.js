@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { loginUserLocal } from '../../services/users';
+import { loginUserLocal } from '../services/users';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
@@ -51,7 +51,7 @@ const Login = () => {
           value={formValues.password}
           onChange={(e) => handleChange(e)}
         />
-        <button className='border rounded p-2 m-2 mb-3 text-white font-bold bg-blue-500 w-72 lg:w-96'>Log in</button>
+        <button className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96'>Log in</button>
       </form>
     </>
   );
