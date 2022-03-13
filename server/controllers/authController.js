@@ -53,8 +53,7 @@ exports.login_local = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(403).json({
-        msg: 'User does not exist',
-        info,
+        msg: info.message,
       });
     }
 
