@@ -37,8 +37,9 @@ exports.register = [
         password: pw,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
+        profile_pic: 'public/images/blank_profile_picture.png',
         friends: [],
-        friendRequests: []
+        friendRequests: [],
       });
 
       user.save((err) => {
