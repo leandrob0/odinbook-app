@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registerUser } from '../../services/users';
+import { registerUser } from '../services/users';
 
 const Register = ({ setModalOpen }) => {
   const [registerForm, setRegisterForm] = useState({
