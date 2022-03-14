@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Login from '../Login';
+import Register from './Register';
 import Register from '../Register';
 import logoFacebook from '../../images/simbolo-de-la-aplicacion-de-facebook.png';
 
@@ -19,17 +20,6 @@ const Homepage = () => {
         </div>
         <div className="m-4 border rounded bg-white shadow-md flex flex-col items-center">
           <Login />
-          <a
-            href="api/users/login/facebook"
-            className="border-2 rounded p-2 m-2 mb-3 text-black font-bold bg-white hover:shadow-md transition w-72 flex justify-center items-center hover:cursor-pointer lg:w-96"
-          >
-            <img
-              className="w-4 h-4 mx-2"
-              src={logoFacebook}
-              alt="Facebook logo"
-            />
-            Log in with facebook
-          </a>
           <div className="flex justify-center border-t-2">
             <button
               type="button"

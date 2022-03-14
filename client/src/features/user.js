@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const state = JSON.parse(localStorage.getItem('user')) || { first_name: '', last_name: '', profile_pic: '', token: '' };
+const state = JSON.parse(localStorage.getItem('user')) || {
+  first_name: '',
+  last_name: '',
+  profile_pic: '',
+};
 
 const userSlice = createSlice({
   name: 'user',
@@ -18,7 +22,6 @@ const userSlice = createSlice({
         first_name: '',
         last_name: '',
         profile_pic: '',
-        token: '',
       };
     },
   },

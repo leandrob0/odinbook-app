@@ -10,8 +10,7 @@ const userSchema = new Schema({
   last_name: { type: String, required: true },
   profile_pic: { type: String },
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  friendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  facebookId: { type: String, required: false },
+  friendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
 userSchema.plugin(findOrCreate);
