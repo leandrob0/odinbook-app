@@ -1,8 +1,25 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import { loginUserLocal } from '../services/users';
+import { useDispatch } from 'react-redux';
+import { login } from '../features/user';
+import logoFacebook from '../images/simbolo-de-la-aplicacion-de-facebook.png';
+//import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  //const navigate = useNavigate('/timeline'); For when the timeline is implemented
+
+  const setValues = (user,token) => {
+    localStorage.setItem('token', JSON.stringify(token));
+    dispatch(
+      login({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        profile_pic: user.profile_pic,
+      })
+    );
+  }
 
   const handleChange = (e) => {
     setFormValues({
@@ -18,11 +35,11 @@ const Login = () => {
       email: formValues.email,
       password: formValues.password,
     };
-    
+
     const response = await loginUserLocal(body);
     if (response.user) {
-      // sets localstate with the token and the redux state with the user (and the token prob).
-      console.log(response);
+      setValues(response.user, response.token);
+      // return navigate();
     } else {
       // Sets an error state to this message.
       console.log(response.msg);
@@ -30,23 +47,40 @@ const Login = () => {
   };
 
   const loginAsGuest = async (e) => {
-    const response = await loginUserLocal({email: 'test@foto.com', password: 'test'});
-    if(response.user) {
-      console.log(response);
+    const response = await loginUserLocal({
+      email: 'test@foto.com',
+      password: 'test',
+    });
+    if (response.user) {
+      setValues(response.user, response.token);
+      // return navigate();
     } else {
       console.log(response.msg);
     }
-  }
+  };
+
+  /* const loginFacebook = async (e) => {
+    const response = await loginUserFacebook();
+    if (response.user) {
+      setValues(response.user, response.token);
+      // return navigate();
+    } else {
+      console.log(response.msg);
+    }
+  }; */
 
   return (
     <>
-      <form className="flex flex-col justify-center items-center" onSubmit={(e) => submitLogin(e)}>
+      <form
+        className="flex flex-col justify-center items-center"
+        onSubmit={(e) => submitLogin(e)}
+      >
         <input
           id="email"
           type="email"
           name="email"
           placeholder="Your email here."
-          className='border rounded p-2 m-4 w-72 lg:w-96'
+          className="border rounded p-2 m-4 w-72 lg:w-96"
           value={formValues.email}
           onChange={(e) => handleChange(e)}
         />
@@ -54,14 +88,29 @@ const Login = () => {
           id="password"
           type="password"
           name="password"
-          placeholder='Your password here.'
-          className='border rounded p-2 m-2 w-72 lg:w-96'
+          placeholder="Your password here."
+          className="border rounded p-2 m-2 w-72 lg:w-96"
           value={formValues.password}
           onChange={(e) => handleChange(e)}
         />
-        <button className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96'>Log in</button>
+        <button className="border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96">
+          Log in
+        </button>
       </form>
-      <button onClick={(e) => loginAsGuest(e)} type='button' className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-orange-500/50 bg-orange-500 hover:bg-orange-600 transition w-72 lg:w-96'> Log in as guest</button>
+      <button
+        onClick={(e) => loginAsGuest(e)}
+        type="button"
+        className="border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-orange-500/50 bg-orange-500 hover:bg-orange-600 transition w-72 lg:w-96"
+      >
+        Log in as guest
+      </button>
+      <a
+        href="#"
+        className="border-2 rounded p-2 m-2 mb-3 text-black font-bold bg-white hover:shadow-md transition w-72 flex justify-center items-center hover:cursor-pointer lg:w-96"
+      >
+        <img className="w-4 h-4 mx-2" src={logoFacebook} alt="Facebook logo" />
+        Log in with facebook
+      </a>
     </>
   );
 };
