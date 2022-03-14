@@ -2,12 +2,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 /* import { useSelector } from "react-redux"; */
 
 import Homepage from './components/pages/Homepage';
+import Timeline from './components/pages/Timeline';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Homepage />}/>
+        <Route exact path="/timeline" element={<Timeline />}/>
       </Routes>
     </BrowserRouter>
   );
