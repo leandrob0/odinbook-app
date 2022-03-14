@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const passport = require('passport');
 
 const authorizeUser = require('../middleware/authorizeUser');
 const authController = require('../controllers/authController');
@@ -15,7 +16,11 @@ router.post('/register', authController.register);
 router.post('/login/local', authController.login_local);
 
 // POST Logs in a new user with the facebook method.
-router.get('/login/facebook', authController.login_facebook);
+router.post(
+  '/login/facebook',
+  passport.authenticate('facebook-token', { session: false }),
+  authController.login_facebook
+);
 
 //
 //  USERS PATHS
