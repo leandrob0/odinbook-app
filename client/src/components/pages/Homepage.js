@@ -30,9 +30,6 @@ const Homepage = () => {
             />
             Log in with facebook
           </a>
-          <button type='button' className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-orange-500/50 bg-orange-500 hover:bg-orange-600 transition w-72 lg:w-96'>
-            Log in as guest.
-          </button>
           <div className="flex justify-center border-t-2">
             <button
               type="button"

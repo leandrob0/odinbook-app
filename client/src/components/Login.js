@@ -29,6 +29,15 @@ const Login = () => {
     }
   };
 
+  const loginAsGuest = async (e) => {
+    const response = await loginUserLocal({email: 'test@foto.com', password: 'test'});
+    if(response.user) {
+      console.log(response);
+    } else {
+      console.log(response.msg);
+    }
+  }
+
   return (
     <>
       <form className="flex flex-col justify-center items-center" onSubmit={(e) => submitLogin(e)}>
@@ -52,6 +61,7 @@ const Login = () => {
         />
         <button className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96'>Log in</button>
       </form>
+      <button onClick={(e) => loginAsGuest(e)} type='button' className='border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-orange-500/50 bg-orange-500 hover:bg-orange-600 transition w-72 lg:w-96'> Log in as guest</button>
     </>
   );
 };
