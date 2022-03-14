@@ -20,7 +20,7 @@ const Homepage = () => {
         <div className="m-4 border rounded bg-white shadow-md flex flex-col items-center">
           <Login />
           <a
-            href="http://localhost:4004/api/users/login/facebook"
+            href="api/users/login/facebook"
             className="border-2 rounded p-2 m-2 mb-3 text-black font-bold bg-white hover:shadow-md transition w-72 flex justify-center items-center hover:cursor-pointer lg:w-96"
           >
             <img
