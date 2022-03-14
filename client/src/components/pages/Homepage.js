@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import Login from '../Login';
 import Register from './Register';
-import Register from '../Register';
-import logoFacebook from '../../images/simbolo-de-la-aplicacion-de-facebook.png';
 
 const Homepage = () => {
   const [modalOpen, setModalOpen] = useState(false);
