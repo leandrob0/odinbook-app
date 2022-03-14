@@ -72,22 +72,15 @@ exports.login_local = (req, res, next) => {
   })(req, res, next);
 };
 
-exports.login_facebook = (req, res, next) => {
-  passport.authenticate('facebook', { session: false }, (err, user, info) => {
-    if (err || !user) {
-      return res.status(403).json({
-        msg: info.message,
-      });
-    }
-
-    req.login(user, { session: false }, (err) => {
-      if (err) return next(err);
-      // create token
-      const token = jwt.sign({ user }, process.env.SECRET_KEY, {
-        expiresIn: '1d',
-      });
-
-      return res.status(200).json({ user, token });
+exports.login_facebook = (req, res) => {
+  if (req.user) {
+    const user = req.user;
+    const token = jwt.sign({ user }, process.env.SECRET_KEY, {
+      expiresIn: '1d',
     });
-  })(req, res, next);
+
+    return res.status(200).json({ user, token });
+  } else {
+    return res.status(401).json({ msg: 'User not found' });
+  }
 };

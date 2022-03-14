@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Login from '../Login';
-import Register from './Register';
+import Register from '../Register';
 
 const Homepage = () => {
   const [modalOpen, setModalOpen] = useState(false);

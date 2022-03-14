@@ -18,3 +18,14 @@ export const loginUserLocal = async (body) => {
     return err.response.data;
   }
 };
+
+export const loginUserFacebook = async (token) => {
+  try {
+    const result = await axios.post(`${baseUrl}/login/facebook`, null ,{
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch(err) {
+    return err.response.data;
+  }
+}
