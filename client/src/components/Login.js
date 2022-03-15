@@ -8,6 +8,7 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({msg: ''});
   const dispatch = useDispatch();
   //const navigate = useNavigate('/timeline'); For when the timeline is implemented
 
@@ -32,6 +33,11 @@ const Login = () => {
   const submitLogin = async (e) => {
     e.preventDefault();
 
+    if(!formValues.email || !formValues.password) {
+      setErrors({msg: 'Both fields must be filled.'});
+      return ;
+    }
+
     const body = {
       email: formValues.email,
       password: formValues.password,
@@ -42,8 +48,7 @@ const Login = () => {
       setValues(response.user, response.token);
       // return navigate();
     } else {
-      // Sets an error state to this message.
-      console.log(response.msg);
+      setErrors({msg: response.msg});
     }
   };
 
@@ -56,7 +61,7 @@ const Login = () => {
       setValues(response.user, response.token);
       // return navigate();
     } else {
-      console.log(response.msg);
+      setErrors({msg: response.msg});
     }
   };
 
@@ -66,7 +71,7 @@ const Login = () => {
       setValues(response.user, response.token);
       // return navigate();
     } else {
-      console.log(response.msg);
+      setErrors({msg: response.msg});
     }
   };
 
@@ -94,6 +99,9 @@ const Login = () => {
           value={formValues.password}
           onChange={(e) => handleChange(e)}
         />
+        {errors.msg !== '' &&
+          <p className="text-red-500 font-bold">{errors.msg}</p>
+        }
         <button className="border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96">
           Log in
         </button>
