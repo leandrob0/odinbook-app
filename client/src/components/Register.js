@@ -8,6 +8,7 @@ const Register = ({ setModalOpen }) => {
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState({ msg: '' });
 
   const handleChange = (e) => {
     setRegisterForm({
@@ -18,16 +19,18 @@ const Register = ({ setModalOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const body = {
       ...registerForm,
     };
 
-    // service to submit the post request.
-    // On error i should display it with an error state.
-    await registerUser(body);
-
-    // If no error close the modal
-    setModalOpen(false);
+    const response = await registerUser(body);
+    if (response.errors) {
+      setErrors({ msg: 'response.msg' });
+    } else {
+      setErrors({ msg: '' });
+      setModalOpen(false);
+    }
   };
 
   return (
@@ -52,6 +55,7 @@ const Register = ({ setModalOpen }) => {
             type="text"
             placeholder="First name"
             className="border rounded p-2 m-2 mr-4 w-36 lg:w-44"
+            required
             value={registerForm.first_name}
             onChange={(e) => handleChange(e)}
           />
@@ -61,6 +65,7 @@ const Register = ({ setModalOpen }) => {
             type="text"
             placeholder="Last name"
             className="border rounded p-2 m-2 ml-4 w-36 lg:w-44"
+            required
             value={registerForm.last_name}
             onChange={(e) => handleChange(e)}
           />
@@ -72,6 +77,7 @@ const Register = ({ setModalOpen }) => {
             type="email"
             placeholder="Your email (example@example.com)."
             className="border rounded p-2 m-2 w-80 lg:w-96"
+            required
             value={registerForm.email}
             onChange={(e) => handleChange(e)}
           />
@@ -83,10 +89,16 @@ const Register = ({ setModalOpen }) => {
             type="password"
             placeholder="Your password."
             className="border rounded p-2 m-2 w-80 lg:w-96"
+            required
             value={registerForm.password}
             onChange={(e) => handleChange(e)}
           />
         </fieldset>
+        {errors.msg !== '' && (
+          <div className="align-middle max-w-fit">
+            <p className="text-red-500 font-bold">{errors.msg}</p>
+          </div>
+        )}
         <button className="border-0 rounded p-2 m-2 mb-3 text-white font-bold shadow-md shadow-green-500/50 bg-green-500 hover:bg-green-600 transition w-80 lg:w-96">
           Create
         </button>
