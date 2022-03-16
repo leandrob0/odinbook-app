@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux';
 import { login } from '../features/user';
 import logoFacebook from '../images/simbolo-de-la-aplicacion-de-facebook.png';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({msg: ''});
   const dispatch = useDispatch();
-  //const navigate = useNavigate('/timeline'); For when the timeline is implemented
+  const navigate = useNavigate();
 
   const setValues = (user, token) => {
     localStorage.setItem('token', JSON.stringify(token));
@@ -46,7 +46,7 @@ const Login = () => {
     const response = await loginUserLocal(body);
     if (response.user) {
       setValues(response.user, response.token);
-      // return navigate();
+      return navigate('/timeline');
     } else {
       setErrors({msg: response.msg});
     }
@@ -59,7 +59,7 @@ const Login = () => {
     });
     if (response.user) {
       setValues(response.user, response.token);
-      // return navigate();
+      return navigate('/timeline');
     } else {
       setErrors({msg: response.msg});
     }
@@ -69,7 +69,7 @@ const Login = () => {
     const response = await loginUserFacebook(res.accessToken);
     if (response.user) {
       setValues(response.user, response.token);
-      // return navigate();
+      return navigate('/timeline');
     } else {
       setErrors({msg: response.msg});
     }
@@ -100,7 +100,7 @@ const Login = () => {
           onChange={(e) => handleChange(e)}
         />
         {errors.msg !== '' &&
-          <p className="text-red-500 font-bold">{errors.msg}</p>
+          <p className="text-red-500 font-bold p-2">{errors.msg}</p>
         }
         <button className="border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96">
           Log in
