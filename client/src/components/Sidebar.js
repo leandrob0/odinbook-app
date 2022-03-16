@@ -11,7 +11,7 @@ function Sidebar() {
     'Ezequiel Garcia',
     'Nicolas Pulti',
   ];
-  // Develop a mobile version with only the images.
+
   return (
     <aside className="bg-gray-500 flex flex-col items-start p-2">
       <div>
