@@ -7,7 +7,7 @@ function Timeline() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-full">
       <nav className="bg-white shadow-lg h-10"> Navbar</nav>
       <main className="flex h-full bg-gray-100">
         <Sidebar />
