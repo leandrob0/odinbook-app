@@ -13,9 +13,9 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="bg-gray-500 flex flex-col items-start p-2">
+    <aside className="flex flex-col items-start p-2">
       <div>
-        <h2 className="text-xs sm:text-sm md:text-base font-bold py-2">Friends:</h2>
+        <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">New friends:</h2>
       </div>
       {width <= 600 ? (
         <MobileFriends friends={testFriends} />
@@ -33,7 +33,7 @@ const MobileFriends = ({ friends }) => {
         return (
           <div key={friend} className="flex my-2 justify-center items-cente">
             <div>
-              <div className="bg-white rounded-full h-6 w-6"></div>
+              <div className="bg-blue-600 rounded-full h-6 w-6"></div>
             </div>
           </div>
         );
@@ -49,10 +49,10 @@ const DesktopFriends = ({ friends }) => {
         return (
           <div key={friend} className="flex my-2 items-center">
             <div className="pr-1">
-              <div className="bg-white rounded-full h-5 w-5"></div>
+              <div className="bg-blue-600 rounded-full h-5 w-5"></div>
             </div>
             <div className="pl-1">
-              <p className="text-sm xl:text-base">{friend}</p>
+              <p className="text-xs md:text-sm">{friend}</p>
             </div>
           </div>
         );
