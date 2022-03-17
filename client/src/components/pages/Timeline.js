@@ -1,12 +1,18 @@
-import Sidebar from "../Sidebar";
+import { useState } from 'react';
+import Sidebar from '../Sidebar';
+import PostsContainer from '../PostsContainer';
+import CreatePost from '../CreatePost';
 
 function Timeline() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
-    <div className='w-full h-screen'>
-      <nav className="bg-gray-300 h-10"> Navbar</nav>
-      <main className='flex h-full'>
-        <Sidebar /> 
-        <section className='bg-white w-4/5'>Posts</section> {/* y para celu tambien va a tener que cambiar la vista. */}
+    <div className="w-full h-full">
+      <nav className="bg-white shadow-lg h-10"> Navbar</nav>
+      <main className="flex h-full bg-gray-100">
+        <Sidebar />
+        <PostsContainer setModalOpen={setModalOpen} />
+        {modalOpen && <CreatePost setModalOpen={setModalOpen} />}
       </main>
     </div>
   );
