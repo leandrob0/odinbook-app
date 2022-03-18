@@ -13,7 +13,7 @@ function Sidebar() {
     <aside className="flex flex-col items-start p-2">
       <div>
         <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">
-          New friends:
+          Friends:
         </h2>
       </div>
       <DesktopFriends friends={testFriends} />
