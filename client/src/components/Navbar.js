@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import {
   HomeIcon,
-  CogIcon,
   UserIcon,
   BellIcon,
   SearchIcon,
@@ -34,9 +33,6 @@ const Navbar = () => {
         </NavLink>
         <NavLink to="/">
           <UserIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
-        </NavLink>
-        <NavLink to="/">
-          <CogIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
         </NavLink>
       </div>
     </nav>
