@@ -1,7 +1,4 @@
-import useWindowDimensions from '../hooks/useWindowDimensions';
-
 function Sidebar() {
-  const { width } = useWindowDimensions();
   const testFriends = [
     'Leandro Bovino',
     'Julio Dechert',
@@ -15,32 +12,14 @@ function Sidebar() {
   return (
     <aside className="flex flex-col items-start p-2">
       <div>
-        <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">New friends:</h2>
+        <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">
+          New friends:
+        </h2>
       </div>
-      {width <= 600 ? (
-        <MobileFriends friends={testFriends} />
-      ) : (
-        <DesktopFriends friends={testFriends} />
-      )}
+      <DesktopFriends friends={testFriends} />
     </aside>
   );
 }
-
-const MobileFriends = ({ friends }) => {
-  return (
-    <section className="flex flex-col items-center w-full">
-      {friends.map((friend) => {
-        return (
-          <div key={friend} className="flex my-2 justify-center items-cente">
-            <div>
-              <div className="bg-blue-600 rounded-full h-6 w-6"></div>
-            </div>
-          </div>
-        );
-      })}
-    </section>
-  );
-};
 
 const DesktopFriends = ({ friends }) => {
   return (
