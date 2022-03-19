@@ -5,8 +5,21 @@ import {
   BellIcon,
   SearchIcon,
 } from '@heroicons/react/solid';
+import { useState } from 'react';
+import { getAllUsers } from '../services/users';
+import { addFullname } from '../helpers/addFullname';
 
 const Navbar = () => {
+  const [allUsers, setAllUsers] = useState([]);
+
+  const getUsers = async () => {
+    const response = await getAllUsers(
+      JSON.parse(localStorage.getItem('token'))
+    );
+    const users = addFullname(response.users);
+    console.log(users);
+  };
+
   return (
     <nav className="flex justify-between items-center p-2 w-full bg-white shadow-md">
       <div>
@@ -23,7 +36,8 @@ const Navbar = () => {
           name="search"
           type="text"
           placeholder="Search"
-          autoComplete='off'
+          onFocus={() => getUsers()}
+          autoComplete="off"
           className="bg-gray-200 text-gray-600 rounded-2xl p-2 hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition w-full outline-none"
         />
       </div>

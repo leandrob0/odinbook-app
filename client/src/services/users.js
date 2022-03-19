@@ -5,10 +5,10 @@ export const registerUser = async (body) => {
   try {
     const result = await axios.post(`${baseUrl}/register`, body);
     return result.data;
-  } catch(err) {
+  } catch (err) {
     return err.response.data;
   }
-}
+};
 
 export const loginUserLocal = async (body) => {
   try {
@@ -21,11 +21,22 @@ export const loginUserLocal = async (body) => {
 
 export const loginUserFacebook = async (token) => {
   try {
-    const result = await axios.post(`${baseUrl}/login/facebook`, null ,{
+    const result = await axios.post(`${baseUrl}/login/facebook`, null, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
-  } catch(err) {
+  } catch (err) {
     return err.response.data;
   }
-}
+};
+
+export const getAllUsers = async (token) => {
+  try {
+    const result = await axios.get(`${baseUrl}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

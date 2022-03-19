@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 // This will work for the searching later, probably will have an state that saves the users for searching.
 exports.all_users = async (req, res) => {
-  const users = await User.find({});
+  let users = await User.find({}, 'first_name last_name profile_pic');
   res.status(200).json({ users });
 };
 

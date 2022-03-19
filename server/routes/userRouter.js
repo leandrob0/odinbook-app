@@ -26,7 +26,8 @@ router.post(
 //  USERS PATHS
 //
 
-router.get('/', userController.all_users);
+// GET Returns every user for the search.
+router.get('/', authorizeUser, userController.all_users);
 
 // GET Returns every friend of the user logged in (for the timeline).
 router.get('/all_friends', authorizeUser, userController.all_friends_self);
