@@ -14,9 +14,11 @@ exports.friend_request = async (req, res) => {
   const friend = await User.findById(id);
 
   // Verify that the user are not already friends. Verify that the user did not sent a request already.
-  const foundFriend = friend.friends.findIndex((idFriend) => idFriend === id);
+  const foundFriend = friend.friends.findIndex(
+    (idFriend) => idFriend.toHexString() === id
+  );
   const foundRequest = friend.friendRequests.findIndex(
-    (idFriend) => idFriend === id
+    (idFriend) => idFriend.toHexString() === id
   );
 
   if (foundRequest !== -1) {
@@ -94,7 +96,10 @@ exports.handle_request = async (req, res) => {
     req.user._id,
     userAccepting,
     { new: true }
-  );
+  )
+    .populate('friends')
+    .populate('friendRequests');
+
   res.status(200).json({ user: newUserAccepting });
 };
 
@@ -103,7 +108,7 @@ exports.all_friends_self = async (req, res) => {
   res.status(200).json({ friends });
 };
 
-exports.all_friends_another = async (req, res) => {
+exports.all_friends_by_id = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
 

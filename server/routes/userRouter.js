@@ -32,7 +32,7 @@ router.get('/', userController.all_users);
 router.get('/all_friends', authorizeUser, userController.all_friends_self);
 
 // GET Returns every friend of an specific user.
-router.get('/all_friends/:id', authorizeUser, userController.all_friends_another);
+router.get('/all_friends/:id', authorizeUser, userController.all_friends_by_id);
 
 // PUT Accepts and id from the user you want to send the request to, returns the user with the friendRequests array updated.
 router.put('/friend_request/:id', authorizeUser, userController.friend_request);
