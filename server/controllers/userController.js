@@ -12,15 +12,26 @@ exports.friend_request = async (req, res) => {
   const id = req.params.id;
   // Searches for the friend that i want to add.
   const friend = await User.findById(id);
-  // Verify that the friend request has not been sent before (is not on pending).
-  const found = friend.friends.findIndex((val) => val._id.toHexString() === id);
-  if (found !== -1 || !friend)
+
+  // Verify that the user are not already friends. Verify that the user did not sent a request already.
+  const foundFriend = friend.friends.findIndex((idFriend) => idFriend === id);
+  const foundRequest = friend.friendRequests.findIndex(
+    (idFriend) => idFriend === id
+  );
+
+  if (foundRequest !== -1) {
+    return res
+      .status(400)
+      .json({ msg: 'A friend request to this user was already sent.' });
+  }
+
+  if (foundFriend !== -1 || !friend)
     return res.status(404).json({
       msg:
-        'A request to ' +
+        'The user ' +
         friend.first_name +
         // eslint-disable-next-line quotes
-        " was already sent or the user doens't exist.",
+        " is already your friend or doesn't exist.",
     });
 
   friend.friendRequests = friend.friendRequests.concat(req.user._id);
@@ -51,11 +62,9 @@ exports.handle_request = async (req, res) => {
   );
   // Didn't found the request on the user that is accepting it.
   if (findRequest === -1) {
-    return res
-      .status(406)
-      .json({
-        msg: 'The user did not send a friend request or the request was canceled.',
-      });
+    return res.status(406).json({
+      msg: 'The user did not send a friend request or the request was canceled.',
+    });
   }
   // The user that sent the request was deleted.
   if (!userSending) {
@@ -80,14 +89,33 @@ exports.handle_request = async (req, res) => {
     );
   }
 
-  await User.findByIdAndUpdate(
-    req.body.id,
-    userSending
-  );
+  await User.findByIdAndUpdate(req.body.id, userSending);
   const newUserAccepting = await User.findByIdAndUpdate(
     req.user._id,
     userAccepting,
     { new: true }
   );
   res.status(200).json({ user: newUserAccepting });
+};
+
+exports.all_friends_self = async (req, res) => {
+  const friends = await User.find({ friends: req.user._id });
+  res.status(200).json({ friends });
+};
+
+exports.all_friends_another = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+
+  if (!user) {
+    return (
+      res
+        .status(404)
+        // eslint-disable-next-line quotes
+        .json({ msg: "The user you are looking for doesn't exist" })
+    );
+  }
+
+  const friends = await User.find({ friends: id }).populate('friends');
+  res.status(200).json({ friends });
 };

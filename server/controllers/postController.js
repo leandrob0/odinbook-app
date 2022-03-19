@@ -1,14 +1,18 @@
 const Post = require('../models/post');
 const User = require('../models/user');
+const upload = require('../config/multer');
 const { body, validationResult } = require('express-validator');
 const { mergeAndSort } = require('../helpers/mergeAndSort');
 
 exports.create_post = [
+  upload.single('file'),
+
   body('text', 'Posts text must be at least 1 character long')
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  async (req, res, next) => {
+
+  (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -21,6 +25,7 @@ exports.create_post = [
         comments: [],
         likes: [],
         text: req.body.text,
+        attached_image: req.file ? req.file.path : undefined,
       });
 
       post.save((err) => {
@@ -42,9 +47,10 @@ exports.timeline_posts = async (req, res) => {
   });
   const friendsPosts = await Promise.all(promises);
 
-  const allPostsSortedAndDateFormated = mergeAndSort(friendsPosts,postsFromSelf);
+  const allPostsSortedAndDateFormated = mergeAndSort(
+    friendsPosts,
+    postsFromSelf
+  );
 
-  res
-    .status(200)
-    .json({ posts: allPostsSortedAndDateFormated });
+  res.status(200).json({ posts: allPostsSortedAndDateFormated });
 };
