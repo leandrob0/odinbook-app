@@ -15,6 +15,8 @@ passport.use(
     },
     (email, password, done) => {
       User.findOne({ email: email })
+        .populate('friends')
+        .populate('friendRequests')
         .select('+password')
         .exec((err, user) => {
           if (err) return done(err);
