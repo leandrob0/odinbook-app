@@ -4,6 +4,8 @@ const state = JSON.parse(localStorage.getItem('user')) || {
   first_name: '',
   last_name: '',
   profile_pic: '',
+  friends: [],
+  friendRequests: [],
 };
 
 const userSlice = createSlice({
@@ -22,6 +24,8 @@ const userSlice = createSlice({
         first_name: '',
         last_name: '',
         profile_pic: '',
+        friends: [],
+        friendRequests: [],
       };
     },
   },
