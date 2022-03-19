@@ -46,6 +46,8 @@ passport.use(
     (req, jwtPayload, cb) => {
       //find the user in db.
       User.findById(jwtPayload.user._id)
+        .populate('friends')
+        .populate('friendRequests')
         .then((user) => {
           req.user = user;
           return cb(null, user);
@@ -62,7 +64,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
-      fbGraphVersion: 'v3.0'
+      fbGraphVersion: 'v3.0',
     },
     function (accessToken, refreshToken, profile, done) {
       // User could not have an email associated to its account, so we return an error.
@@ -70,7 +72,8 @@ passport.use(
       if (!profile._json.email) {
         return done(null, false, {
           message:
-            'Facebook account doens\'t have an email associated, please log in using other methods',
+            // eslint-disable-next-line quotes
+            "Facebook account doens't have an email associated, please log in using other methods",
         });
       }
       User.findOrCreate(
@@ -83,11 +86,16 @@ passport.use(
           friends: [],
           posts: [],
           friendRequests: [],
-        },
-        function (error, user) {
-          return done(error, user);
         }
-      );
+      )
+        .populate('friends')
+        .populate('friendRequests')
+        .then((user) => {
+          return done(null, user);
+        })
+        .catch((err) => {
+          return done(err);
+        });
     }
   )
 );
