@@ -19,7 +19,7 @@ const userSlice = createSlice({
       state.value = action.payload;
     },
     logout: (state) => {
-      localStorage.removeItem('user');
+      localStorage.clear();
       state.value = {
         first_name: '',
         last_name: '',
