@@ -10,11 +10,11 @@ const mergeAndSort = (arr1, arr2) => {
 
 const formatDates = (arr) => {
   return arr.map((val) => {
-    const dayAndTime = val.createdAt.split('T');
+    const dayAndTime = val.createdAt.toString().split('T');
     const time = dayAndTime[1].split('.');
     val.createdAt = `${dayAndTime[0]} at ${time[0]}`;
     return val;
   });
 };
 
-module.exports = {mergeAndSort, formatDates};
+module.exports = { mergeAndSort, formatDates };

@@ -12,7 +12,7 @@ exports.create_post = [
     .isLength({ min: 1 })
     .escape(),
 
-  (req, res, next) => {
+  async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -28,17 +28,18 @@ exports.create_post = [
         attached_image: req.file ? req.file.path : undefined,
       });
 
-      post.save((err) => {
-        if (err) return next(err);
-        res.status(201).json({ post: post });
-      });
+      await post.save();
+      const newPost = await Post.find({ author: post.author }).populate(
+        'author'
+      );
+      res.status(201).json({ post: newPost });
     }
   },
 ];
 
 exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
-  const postsFromSelf = await Post.find({ author: req.user_id }).populate(
+  const postsFromSelf = await Post.find({ author: req.user._id }).populate(
     'author'
   );
   const promises = friends.map(async (friend) => {
