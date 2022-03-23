@@ -17,7 +17,7 @@ exports.create_post = [
 
     if (!errors.isEmpty()) {
       res.status(400).json({
-        error: errors.array(),
+        msg: errors.array(),
       });
     } else {
       const post = new Post({

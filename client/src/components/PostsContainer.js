@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import SinglePost from './SinglePost';
 import { getTimelinePosts } from '../services/posts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
+import { setPosts } from '../features/post';
 
 function PostsContainer({ setModalOpen }) {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([]);
+  const posts = useSelector((state) => state.post.value.posts);
 
   useEffect(() => {
     const result = getTimelinePosts(JSON.parse(localStorage.getItem('token')));
@@ -20,7 +21,7 @@ function PostsContainer({ setModalOpen }) {
       dispatch(logout());
       return navigate('/');
     } else {
-      setPosts(result.posts)
+      dispatch(setPosts(result.posts));
     }
   }, [dispatch, navigate]);
 
@@ -43,7 +44,10 @@ function PostsContainer({ setModalOpen }) {
           );
         })
       ) : (
-        <div className='h-screen'>There are no posts.<br/> To see posts, add friends or create them!</div>
+        <div className="h-screen">
+          There are no posts.
+          <br /> To see posts, add friends or create them!
+        </div>
       )}
     </section>
   );
