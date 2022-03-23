@@ -1,10 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { io } from 'socket.io-client';
 
 import Homepage from './components/pages/Homepage';
 import Timeline from './components/pages/Timeline';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    const socket = io('http://localhost:4004');
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
