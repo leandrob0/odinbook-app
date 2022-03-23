@@ -1,22 +1,38 @@
 import { useState } from 'react';
 import { createPost } from '../services/posts';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../features/post';
 
 const CreatePost = ({ setModalOpen }) => {
-  const [formValues, setFormValues] = useState({ text: '', file: undefined });
+  const [formValues, setFormValues] = useState({
+    text: '',
+    file: undefined,
+    name: '',
+  });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = new FormData();
+    data.append('text', formValues.text);
+    if (formValues.file && formValues.name) {
+      data.append('name', formValues.name);
+      data.append('file', formValues.file);
+    }
+
     const result = await createPost(
       JSON.parse(localStorage.getItem('token')),
-      formValues
+      data
     );
     if (result.msg) {
       console.log(result.msg);
     } else {
       dispatch(addPost(result.post));
+      setModalOpen(false);
+      return navigate('/timeline');
     }
   };
 
@@ -60,7 +76,8 @@ const CreatePost = ({ setModalOpen }) => {
           onChange={(e) =>
             setFormValues({
               ...formValues,
-              [e.target.name]: e.target.files[0],
+              file: e.target.files[0],
+              name: e.target.files[0].name,
             })
           }
           className="block w-full text-sm text-slate-500 px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"

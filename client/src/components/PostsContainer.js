@@ -14,19 +14,24 @@ function PostsContainer({ setModalOpen }) {
   const posts = useSelector((state) => state.post.value.posts);
 
   useEffect(() => {
-    const result = getTimelinePosts(JSON.parse(localStorage.getItem('token')));
+    const loadPosts = async () => {
+      const result = await getTimelinePosts(
+        JSON.parse(localStorage.getItem('token'))
+      );
 
-    if (result.msg) {
-      alert('Your session expired, please log in again.');
-      dispatch(logout());
-      return navigate('/');
-    } else {
-      dispatch(setPosts(result.posts));
-    }
+      if (result.msg) {
+        alert('Your session expired, please log in again.');
+        dispatch(logout());
+        return navigate('/');
+      } else {
+        dispatch(setPosts(result.posts));
+      }
+    };
+    loadPosts();
   }, [dispatch, navigate]);
 
   return (
-    <section className="w-full flex flex-col items-center">
+    <section className="w-full min-h-screen flex flex-col items-center">
       {width <= 600 ? (
         <ToggleCreateMobile setModalOpen={setModalOpen} />
       ) : (
@@ -37,9 +42,11 @@ function PostsContainer({ setModalOpen }) {
           return (
             <SinglePost
               key={post._id}
+              author={post.author}
               text={post.text}
               likes={post.likes}
               comments={post.comments}
+              attached_image={post.attached_image}
             />
           );
         })

@@ -7,10 +7,14 @@ const postSlice = createSlice({
   },
   reducers: {
     setPosts: (state, action) => {
-      state.value = action.payload;
+      state.value = { posts: action.payload};
     },
     addPost: (state, action) => {
-      state.value.posts = state.value.posts.concat(action.payload);
+      const curPosts = state.value ? state.value.posts : null;
+      const updatedAr = curPosts
+        ? curPosts.concat(action.payload)
+        : action.payload;
+      state.value = {posts: updatedAr};
     },
   },
 });
