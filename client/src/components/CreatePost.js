@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPost } from '../services/posts';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import { addPost } from '../features/post';
 
 const CreatePost = ({ setModalOpen }) => {
@@ -10,6 +10,7 @@ const CreatePost = ({ setModalOpen }) => {
     file: undefined,
     name: '',
   });
+  const userPicture = useSelector((state) => state.user.value.profile_pic);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -50,7 +51,13 @@ const CreatePost = ({ setModalOpen }) => {
           <h2 className="font-bold text-lg">Create Post</h2>
         </div>
         <div className="flex justify-center p-2">
-          <div className="bg-blue-500 rounded-full h-10 w-10"></div>
+        <div>
+          <img
+            src={userPicture}
+            alt="author"
+            className="h-10 w-10 rounded-full"
+          />
+        </div>
         </div>
         <textarea
           name="text"
