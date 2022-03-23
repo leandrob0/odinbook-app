@@ -1,4 +1,5 @@
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import {count } from '../helpers/countLikesComments';
 
 function SinglePost({ author, text, likes, comments, attached_image }) {
   const { width } = useWindowDimensions();
@@ -55,8 +56,8 @@ const DesktopSingle = ({ author, text, likes, comments, attached_image }) => {
         </div>
       )}
       <div className="flex justify-between w-full text-xs text-gray-600 py-2 border-b border-b-gray-300">
-        <p>{likes} Likes</p>
-        <p>{comments} Comments</p>
+        <p>{count(likes)} Likes</p>
+        <p>{count(comments)} Comments</p>
       </div>
       <div className="flex justify-around w-full text-gray-800 font-medium pt-4">
         <p>Like</p>
@@ -95,8 +96,8 @@ const MobileSingle = ({ author, text, likes, comments, attached_image }) => {
         </div>
       )}
       <div className="flex justify-between w-full text-xs text-gray-600 py-2 border-b border-b-gray-300">
-        <p>{likes} Likes</p>
-        <p>{comments} Comments</p>
+        <p>{count(likes)} Likes</p>
+        <p>{count(comments)} Comments</p>
       </div>
       <div className="flex justify-around w-full text-gray-800 font-medium pt-4">
         <p>Like</p>
