@@ -41,8 +41,12 @@ app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
 
 // Socket.io
-io.on('connection', () => {
+io.on('connection', (socket) => {
   console.log('Someone has connected.');
+
+  socket.on('disconnect', () => {
+    console.log('Someone has left');
+  })
 })
 
 const PORT = process.env.PORT;
