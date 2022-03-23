@@ -7,6 +7,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server, { cors: '*' });
 const connectDb = require('./config/db');
 
 connectDb();
@@ -36,8 +40,13 @@ const errors = require('./middleware/errorHandler');
 app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
 
+// Socket.io
+io.on('connection', () => {
+  console.log('Someone has connected.');
+})
+
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listening on Port: ${PORT}`);
 });
 
