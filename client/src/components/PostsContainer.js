@@ -1,24 +1,28 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import SinglePost from './SinglePost';
+import { getTimelinePosts } from '../services/posts';
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/user';
 
 function PostsContainer({ setModalOpen }) {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
 
-  const testPosts = [
-    { text: 'This is a post', likes: 0, comments: 2 },
-    {
-      text: 'This post has the most comments of them all!',
-      likes: 17,
-      comments: 23,
-    },
-    { text: 'No comments on this post.', likes: 2, comments: 0 },
-    { text: 'A post with the same likes and comments', likes: 6, comments: 6 },
-    {
-      text: 'Another posts but this is the most liked one',
-      likes: 30,
-      comments: 11,
-    },
-  ];
+  useEffect(() => {
+    const result = getTimelinePosts(JSON.parse(localStorage.getItem('token')));
+
+    if (result.msg) {
+      alert('Your session expired, please log in again.');
+      dispatch(logout());
+      return navigate('/');
+    } else {
+      setPosts(result.posts)
+    }
+  }, [dispatch, navigate]);
 
   return (
     <section className="w-full flex flex-col items-center">
@@ -27,16 +31,20 @@ function PostsContainer({ setModalOpen }) {
       ) : (
         <ToggleCreateDesktop setModalOpen={setModalOpen} />
       )}
-      {testPosts.map((post) => {
-        return (
-          <SinglePost
-            key={post.text}
-            text={post.text}
-            likes={post.likes}
-            comments={post.comments}
-          />
-        );
-      })}
+      {posts ? (
+        posts.map((post) => {
+          return (
+            <SinglePost
+              key={post._id}
+              text={post.text}
+              likes={post.likes}
+              comments={post.comments}
+            />
+          );
+        })
+      ) : (
+        <div className='h-screen'>There are no posts.<br/> To see posts, add friends or create them!</div>
+      )}
     </section>
   );
 }
