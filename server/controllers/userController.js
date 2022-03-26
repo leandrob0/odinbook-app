@@ -103,11 +103,6 @@ exports.handle_request = async (req, res) => {
   res.status(200).json({ user: newUserAccepting });
 };
 
-exports.friends_self = async (req, res) => {
-  const info = await User.find({friends: req.user._id}).select('friends').populate('friends');
-  res.status(200).json({ info });
-};
-
 exports.info_by_id = async (req, res) => {
   const info = await User.findById(req.params.id).populate('friends');
   res.status(200).json({ info });
