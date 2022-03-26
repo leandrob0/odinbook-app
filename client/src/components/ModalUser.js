@@ -5,9 +5,11 @@ import { logout } from '../features/user';
 const ModalUser = ({ closeModalUser }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  /* const profile = (e) => {
 
-    } */
+  const profile = (e) => {
+    e.stopPropagation();
+    return navigate(`/profile/${JSON.parse(localStorage.getItem('user')).id}`);
+  };
 
   const logoutClick = (e) => {
     e.stopPropagation();
@@ -25,10 +27,16 @@ const ModalUser = ({ closeModalUser }) => {
         id="dropdown"
       >
         <section className="flex flex-col">
-          <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
+          <p
+            onClick={(e) => profile(e)}
+            className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition"
+          >
             Profile
           </p>
-          <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
+          <p
+            onClick={(e) => console.log('Under development')}
+            className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition"
+          >
             Settings
           </p>
           <p
