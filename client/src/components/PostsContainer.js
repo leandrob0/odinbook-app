@@ -38,17 +38,24 @@ function PostsContainer({ setModalOpen }) {
     loadPosts();
   }, [dispatch, navigate]);
 
+  const navigateToSelfProfile = (e) => {
+    e.stopPropagation();
+    return navigate(`/profile/${JSON.parse(localStorage.getItem('user')).id}`)
+  };
+
   return (
     <section className="w-full min-h-screen flex flex-col items-center">
       {width <= 600 ? (
         <ToggleCreateMobile
           userPicture={userPicture}
           setModalOpen={setModalOpen}
+          navigateToSelfProfile={navigateToSelfProfile}
         />
       ) : (
         <ToggleCreateDesktop
           userPicture={userPicture}
           setModalOpen={setModalOpen}
+          navigateToSelfProfile={navigateToSelfProfile}
         />
       )}
       {loading && <Loading />}
@@ -75,10 +82,14 @@ function PostsContainer({ setModalOpen }) {
   );
 }
 
-const ToggleCreateDesktop = ({ userPicture, setModalOpen }) => {
+const ToggleCreateDesktop = ({
+  userPicture,
+  setModalOpen,
+  navigateToSelfProfile,
+}) => {
   return (
     <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-1/2">
-      <div>
+      <div className='hover:cursor-pointer' onClick={(e) => navigateToSelfProfile(e)}>
         <img
           src={userPicture}
           alt="author"
@@ -95,10 +106,14 @@ const ToggleCreateDesktop = ({ userPicture, setModalOpen }) => {
   );
 };
 
-const ToggleCreateMobile = ({ userPicture, setModalOpen }) => {
+const ToggleCreateMobile = ({
+  userPicture,
+  setModalOpen,
+  navigateToSelfProfile,
+}) => {
   return (
     <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-full">
-      <div>
+      <div className='hover:cursor-pointer' onClick={(e) => navigateToSelfProfile(e)}>
         <img
           src={userPicture}
           alt="author"

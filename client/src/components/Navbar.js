@@ -12,11 +12,13 @@ import { getAllUsers } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 
 import ModalSearch from './ModalSearch';
+import ModalUser from './ModalUser';
 
 const Navbar = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [modalSearch, setModalSearch] = useState(false);
+  const [modalUser, setModalUser] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,26 +28,33 @@ const Navbar = () => {
       JSON.parse(localStorage.getItem('token'))
     );
 
-    if(response.msg) {
+    if (response.msg) {
       alert('Your session expired, please log in again.');
       dispatch(logout());
       return navigate('/');
     }
-    
+
     const users = addFullname(response.users);
     setAllUsers(users);
   };
 
   // When the input value changes, it filters the users array according to the user search value. Shows only 5 users.
   const filterUsers = (e) => {
-    const newArr = allUsers.filter(user => user.fullname.toLowerCase().includes(e.toLowerCase()));
+    const newArr = allUsers.filter((user) =>
+      user.fullname.toLowerCase().includes(e.toLowerCase())
+    );
     setFiltered(newArr);
-  }
+  };
 
   const openModalSearch = (e) => {
     e.stopPropagation();
     setModalSearch(true);
-  }
+  };
+
+  const userOptions = (e) => {
+    e.stopPropagation();
+    setModalUser(!modalUser);
+  };
 
   return (
     <nav className="flex justify-between items-center p-2 w-full bg-white shadow-md">
@@ -54,7 +63,10 @@ const Navbar = () => {
           <HomeIcon className="h-7 w-7 text-blue-500 hover:text-blue-600 transition md:h-7 md:w-7" />
         </NavLink>
       </div>
-      <div onClick={(e) => openModalSearch(e)} className="flex justify-center items-center w-44 md:w-auto rounded-2xl bg-gray-200 text-gray-600 hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition relative">
+      <div
+        onClick={(e) => openModalSearch(e)}
+        className="flex justify-center items-center w-44 md:w-auto rounded-2xl bg-gray-200 text-gray-600 hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition relative"
+      >
         <label htmlFor="search">
           <SearchIcon className="h-7 w-7 text-grafilterUsersy-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
         </label>
@@ -68,15 +80,21 @@ const Navbar = () => {
           autoComplete="off"
           className="bg-gray-200 text-gray-600 rounded-2xl p-2 hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition w-full outline-none"
         />
-        { modalSearch && <ModalSearch users={filtered} setModalSearch={setModalSearch} />}
+        {modalSearch && (
+          <ModalSearch users={filtered} setModalSearch={setModalSearch} />
+        )}
       </div>
       <div className="flex">
         <NavLink to="/">
           <BellIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
         </NavLink>
-        <NavLink to="/">
-          <UserIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
-        </NavLink>
+        <div className="relative">
+          <UserIcon
+            onClick={(e) => userOptions(e)}
+            className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1"
+          />
+          {modalUser && <ModalUser closeModalUser={userOptions}/>}
+        </div>
       </div>
     </nav>
   );

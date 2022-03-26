@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const state = JSON.parse(localStorage.getItem('user')) || {
+  id: '',
   first_name: '',
   last_name: '',
   profile_pic: '',
@@ -21,6 +22,7 @@ const userSlice = createSlice({
     logout: (state) => {
       localStorage.clear();
       state.value = {
+        id: '',
         first_name: '',
         last_name: '',
         profile_pic: '',

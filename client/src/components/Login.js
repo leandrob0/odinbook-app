@@ -16,6 +16,8 @@ const Login = () => {
     localStorage.setItem('token', JSON.stringify(token));
     dispatch(
       login({
+        id: user._id,
+        email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,
         profile_pic: user.profile_pic,
