@@ -85,15 +85,15 @@ const Navbar = () => {
         )}
       </div>
       <div className="flex">
-        <NavLink to="/">
+        <div className="relative">
           <BellIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
-        </NavLink>
+        </div>
         <div className="relative">
           <UserIcon
             onClick={(e) => userOptions(e)}
             className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1"
           />
-          {modalUser && <ModalUser closeModalUser={userOptions}/>}
+          {modalUser && <ModalUser closeModalUser={userOptions} />}
         </div>
       </div>
     </nav>
