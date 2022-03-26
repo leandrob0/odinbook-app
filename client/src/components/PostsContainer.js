@@ -1,13 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useWindowDimensions from '../hooks/useWindowDimensions';
-import SinglePost from './SinglePost';
-import { getTimelinePosts } from '../services/posts';
 import { useDispatch, useSelector } from 'react-redux';
+import useWindowDimensions from '../hooks/useWindowDimensions';
+
+import { getTimelinePosts } from '../services/posts';
+
 import { logout } from '../features/user';
 import { setPosts } from '../features/post';
 
+import SinglePost from './SinglePost';
+import Loading from './Loading';
+
 function PostsContainer({ setModalOpen }) {
+  const [loading, setLoading] = useState(false);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,6 +21,7 @@ function PostsContainer({ setModalOpen }) {
 
   useEffect(() => {
     const loadPosts = async () => {
+      setLoading(true);
       const result = await getTimelinePosts(
         JSON.parse(localStorage.getItem('token'))
       );
@@ -25,6 +31,7 @@ function PostsContainer({ setModalOpen }) {
         dispatch(logout());
         return navigate('/');
       } else {
+        setLoading(false);
         dispatch(setPosts(result.posts));
       }
     };
@@ -34,10 +41,17 @@ function PostsContainer({ setModalOpen }) {
   return (
     <section className="w-full min-h-screen flex flex-col items-center">
       {width <= 600 ? (
-        <ToggleCreateMobile userPicture={userPicture} setModalOpen={setModalOpen} />
+        <ToggleCreateMobile
+          userPicture={userPicture}
+          setModalOpen={setModalOpen}
+        />
       ) : (
-        <ToggleCreateDesktop userPicture={userPicture} setModalOpen={setModalOpen} />
+        <ToggleCreateDesktop
+          userPicture={userPicture}
+          setModalOpen={setModalOpen}
+        />
       )}
+      {loading && <Loading />}
       {posts ? (
         posts.map((post) => {
           return (
@@ -61,16 +75,16 @@ function PostsContainer({ setModalOpen }) {
   );
 }
 
-const ToggleCreateDesktop = ({ userPicture , setModalOpen }) => {
+const ToggleCreateDesktop = ({ userPicture, setModalOpen }) => {
   return (
     <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-1/2">
       <div>
-          <img
-            src={userPicture}
-            alt="author"
-            className="h-10 w-10 rounded-full mr-3"
-          />
-        </div>
+        <img
+          src={userPicture}
+          alt="author"
+          className="h-10 w-10 rounded-full mr-3"
+        />
+      </div>
       <div
         className="rounded-2xl bg-gray-200 text-gray-600 p-2 w-full hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition"
         onClick={() => setModalOpen(true)}
@@ -85,12 +99,12 @@ const ToggleCreateMobile = ({ userPicture, setModalOpen }) => {
   return (
     <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-full">
       <div>
-          <img
-            src={userPicture}
-            alt="author"
-            className="h-10 w-10 rounded-full flex-shrink-0 mr-3"
-          />
-        </div>
+        <img
+          src={userPicture}
+          alt="author"
+          className="h-10 w-10 rounded-full flex-shrink-0 mr-3"
+        />
+      </div>
       <div
         className="rounded-2xl bg-gray-200 text-gray-600 p-2 w-full hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition"
         onClick={() => setModalOpen(true)}
