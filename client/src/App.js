@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 import Homepage from './components/pages/Homepage';
 import Timeline from './components/pages/Timeline';
-import { useEffect } from 'react';
+import Profile from './components/pages/Profile';
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,15 @@ function App() {
           element={
             <RequireAuth redirectTo="/">
               <Timeline />
+            </RequireAuth>
+          }
+        />
+        <Route
+          exact
+          path="/profile/:id"
+          element={
+            <RequireAuth redirectTo="/">
+              <Profile />
             </RequireAuth>
           }
         />
