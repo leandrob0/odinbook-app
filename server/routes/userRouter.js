@@ -29,10 +29,10 @@ router.post(
 // GET Returns every user for the search.
 router.get('/', authorizeUser, userController.all_users);
 
-// GET Returns every friend of the user logged in (for the timeline).
-router.get('/all_friends', authorizeUser, userController.all_friends_self);
+// GET Returns all the info from the requesting user (for the profile page and the timeline friends tab).
+router.get('/info', authorizeUser, userController.info_self);
 
-// GET Returns every friend of an specific user.
+// GET Returns (only info about) every friend of an specific user.
 router.get('/all_friends/:id', authorizeUser, userController.all_friends_by_id);
 
 // PUT Accepts and id from the user you want to send the request to, returns the user with the friendRequests array updated.
