@@ -6,6 +6,9 @@ const postController = require('../controllers/postController');
 // POST Creates a new post and returns it.
 router.post('/new_post', authorizeUser, postController.create_post);
 
+// GET Returns all posts from an id.
+router.get('/posts/:id', authorizeUser, postController.self_posts);
+
 // GET Returns all posts from friends and self.
 router.get('/timeline', authorizeUser, postController.timeline_posts);
 

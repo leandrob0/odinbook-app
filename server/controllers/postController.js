@@ -37,6 +37,16 @@ exports.create_post = [
   },
 ];
 
+exports.self_posts = async (req, res) => {
+  const posts = await Post.find({ author: req.params.id }).populate('author');
+
+  // I pass it an empty array, because this function merges two arrays and does the rest.
+  // So if i pass an empty array, the original one wont change.
+  const allPostsSortedAndDateFormated = mergeAndSort(posts, []);
+
+  res.status(200).json({ posts: allPostsSortedAndDateFormated });
+};
+
 exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
   const postsFromSelf = await Post.find({ author: req.user._id }).populate(
