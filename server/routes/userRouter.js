@@ -29,8 +29,11 @@ router.post(
 // GET Returns every user for the search.
 router.get('/', authorizeUser, userController.all_users);
 
-// GET Returns all the info from the requesting user (for the profile page and the timeline friends tab).
-router.get('/info', authorizeUser, userController.info_self);
+// GET Returns all friends of the requesting user (for the profile page and the timeline friends tab).
+router.get('/friends', authorizeUser, userController.friends_self);
+
+// GET Returns all the info from the specified user (for the profile page).
+router.get('/info/:id', authorizeUser, userController.info_by_id);
 
 // GET Returns (only info about) every friend of an specific user.
 router.get('/all_friends/:id', authorizeUser, userController.all_friends_by_id);

@@ -103,24 +103,12 @@ exports.handle_request = async (req, res) => {
   res.status(200).json({ user: newUserAccepting });
 };
 
-exports.info_self = async (req, res) => {
-  const info = await User.find({ friends: req.user._id }).populate('friends');
+exports.friends_self = async (req, res) => {
+  const info = await User.find({friends: req.user._id}).select('friends').populate('friends');
   res.status(200).json({ info });
 };
 
-exports.all_friends_by_id = async (req, res) => {
-  const id = req.params.id;
-  const user = await User.findById(id);
-
-  if (!user) {
-    return (
-      res
-        .status(404)
-        // eslint-disable-next-line quotes
-        .json({ msg: "The user you are looking for doesn't exist" })
-    );
-  }
-
-  const friends = await User.find({ friends: id }).select('friends').populate('friends');
-  res.status(200).json({ friends });
-};
+exports.info_by_id = async (req, res) => {
+  const info = await User.findById(req.params.id).populate('friends');
+  res.status(200).json({ info });
+}
