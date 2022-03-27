@@ -44,7 +44,7 @@ function PostsContainer({ setModalOpen }) {
   };
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center">
+    <section className="w-full min-h-screen max-w-screen-xl flex flex-col items-center">
       {width <= 600 ? (
         <ToggleCreateMobile
           userPicture={userPicture}
