@@ -13,6 +13,7 @@ import SidebarProfile from '../SidebarProfile';
 import PostsContainer from '../PostsContainer';
 
 const Profile = () => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState('');
   const { id } = useParams();
   const { width } = useWindowDimensions();
@@ -21,6 +22,7 @@ const Profile = () => {
 
   useEffect(() => {
     const loadPosts = async () => {
+      setLoading(true);
       const result = await getPostsFromUser(
         JSON.parse(localStorage.getItem('token')),
         id
@@ -31,6 +33,7 @@ const Profile = () => {
         dispatch(logout());
         return navigate('/');
       } else {
+        setLoading(false);
         dispatch(setPosts(result.posts));
       }
     };
@@ -59,7 +62,7 @@ const Profile = () => {
       <Navbar />
       <main className={width < 800 ? 'flex flex-wrap' : 'flex'}>
         {user && <SidebarProfile user={user} />}
-        <PostsContainer />
+        <PostsContainer loading={loading} />
       </main>
     </div>
   );
