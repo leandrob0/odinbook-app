@@ -68,7 +68,6 @@ function PostsContainer({ setModalOpen }) {
       ) : (
         <div className="h-screen">
           There are no posts.
-          <br /> To see posts, add friends or create them!
         </div>
       )}
     </section>

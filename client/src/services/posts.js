@@ -23,3 +23,14 @@ export const getTimelinePosts = async (token) => {
     return err.response.data;
   }
 };
+
+export const getPostsFromUser = async (token, id) => {
+  try {
+    const result = await axios.get(`${baseUrl}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

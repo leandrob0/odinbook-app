@@ -40,3 +40,14 @@ export const getAllUsers = async (token) => {
     return err.response.data;
   }
 };
+
+export const getUserInfo = async (token,id) => {
+  try {
+    const result = await axios.get(`${baseUrl}/info/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+}
