@@ -15,20 +15,19 @@ const ModalSearch = ({ users, setModalSearch  }) => {
         {users &&
           users.slice(0, 6).map((user) => {
             return (
-              <div
+              <a
                 key={user._id}
                 id={user._id}
-                onClick={(e) => console.log(e.target.id)}
                 className="flex m-4 items-center"
+                href={'/profile/' + user._id}
               >
                 <img
                   alt="User profile"
                   src={user.profile_pic}
                   className="rounded-full w-7 h-7"
-                  onClick={(e) => {e.stopPropagation(); console.log(e.target.parentNode.id)}}
                 />
-                <p onClick={(e) => {e.stopPropagation(); console.log(e.target.parentNode.id)}} className="text-xs md:text-sm pl-3">{user.fullname}</p>
-              </div>
+                <p className="text-xs md:text-sm pl-3">{user.fullname}</p>
+              </a>
             );
           })}
       </div>
