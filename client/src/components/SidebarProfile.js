@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
+import checkFriend from '../helpers/checkIfFriend';
 
 const SidebarProfile = ({user}) => {
-  const id = useSelector((state) => state.user.value.id);
+  const loggedUser = useSelector((state) => state.user.value);
 
   return (
     <aside className="flex flex-col items-center p-2 w-80 mt-5 mb-3 m-auto">
@@ -17,8 +18,7 @@ const SidebarProfile = ({user}) => {
           <h3>{user.first_name + ' ' + user.last_name}</h3>
         </div>
       </div>
-      {/* I shoud check also if the user is a friend already. TODO. */}
-      {id !== user._id && <div>Add friend</div>}
+      {(loggedUser.id !== user._id && checkFriend(loggedUser.friends, user.email)) && user && <div>Add friend</div>}
       <div className='flex flex-wrap'>
         {user.friends &&
           user.friends.forEach((friend) => {
