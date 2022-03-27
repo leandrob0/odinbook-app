@@ -19,7 +19,7 @@ const SidebarProfile = ({user}) => {
       </div>
       {/* I shoud check also if the user is a friend already. TODO. */}
       {id !== user._id && <div>Add friend</div>}
-      <div>
+      <div className='flex flex-wrap'>
         {user.friends &&
           user.friends.forEach((friend) => {
             return (
