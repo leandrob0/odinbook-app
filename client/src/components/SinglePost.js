@@ -31,13 +31,13 @@ const DesktopSingle = ({ author, text, likes, comments, attached_image }) => {
   return (
     <article className="w-1/2 flex flex-col items-start m-4 bg-white rounded p-4">
       <div className="flex justify-center items-center">
-        <div>
+        <a className="hover:cursor-pointer" href={'/profile/' + author._id}>
           <img
-            src={author.profile_pic}
+            src={'/'+ author.profile_pic}
             alt="author"
             className="h-10 w-10 rounded-full"
           />
-        </div>
+        </a>
         <div className="flex flex-col items-center p-2">
           <p>{author.first_name + ' ' + author.last_name}</p>
           <p className="text-xs text-gray-500">03/17/2022 at 12:35</p>
@@ -50,7 +50,7 @@ const DesktopSingle = ({ author, text, likes, comments, attached_image }) => {
         <div className="py-4">
           <img
             className="w-full aspect-video"
-            src={attached_image}
+            src={'/'+attached_image}
             alt="post content"
           />
         </div>
@@ -71,13 +71,13 @@ const MobileSingle = ({ author, text, likes, comments, attached_image }) => {
   return (
     <article className="w-full flex flex-col items-start m-4 bg-white rounded p-4">
       <div className="flex justify-center items-center">
-        <div>
+        <a className="hover:cursor-pointer" href={'/profile/' + author._id}>
           <img
-            src={author.profile_pic}
+            src={'/'+ author.profile_pic}
             alt="author"
             className="h-10 w-10 rounded-full"
           />
-        </div>
+        </a>
         <div className="flex flex-col items-center p-2">
           <p>{author.first_name + ' ' + author.last_name}</p>
           <p className="text-xs text-gray-500">03/17/2022 at 12:35</p>
@@ -90,7 +90,7 @@ const MobileSingle = ({ author, text, likes, comments, attached_image }) => {
         <div className="py-4">
           <img
             className="w-full aspect-video"
-            src={attached_image}
+            src={'/'+attached_image}
             alt="post content"
           />
         </div>
