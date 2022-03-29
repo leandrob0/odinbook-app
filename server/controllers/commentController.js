@@ -1,4 +1,4 @@
-//const Post = require('../models/post');
+const Post = require('../models/post');
 const Comment = require('../models/comment');
 
 exports.create_comment = async (req, res) => {
@@ -12,8 +12,26 @@ exports.create_comment = async (req, res) => {
       likes: [],
     });
 
-    await comment.save();
+    const newComment = await comment.save();
 
     // Now updates the posts
+    // First get the post where you want a new comment.
+    const postOfTheNewComment = await Post.findById(req.params.id);
+    // Updates the comments array.
+    postOfTheNewComment.comments = postOfTheNewComment.comments.concat(
+      newComment._id
+    );
+    // Updates it in the db.
+    const postUpdated = await Post.findByIdAndUpdate(
+      req.params.id,
+      postOfTheNewComment,
+      { new: true }
+    )
+      .populate('author')
+      .populate('likes')
+      .populate('comments');
+    
+    // Returns the post with the new comment added, and every field needed.
+    res.status(200).json({ post: postUpdated });
   }
 };
