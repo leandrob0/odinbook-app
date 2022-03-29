@@ -69,6 +69,15 @@ exports.timeline_posts = async (req, res) => {
 exports.like_post = async (req, res) => {
   const post = await Post.findById(req.params.id).populate('likes');
   const postCopy = post;
+
+  for (let like in postCopy.likes) {
+    if (like === req.user._id) {
+      return res
+        .status(400)
+        .json({ msg: 'The user already liked that comment.' });
+    }
+  }
+
   postCopy.likes = postCopy.likes.concat(req.user._id);
 
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, postCopy, {
