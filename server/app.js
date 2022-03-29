@@ -32,8 +32,10 @@ app.use(passport.initialize());
 // Routes setup
 const userRouter = require('./routes/userRouter');
 const postsRouter = require('./routes/postRouter');
+const commentsRouter = require('./routes/commentRouter');
 app.use('/api/users', userRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/comments', commentsRouter);
 
 // Errors handlers
 const errors = require('./middleware/errorHandler');

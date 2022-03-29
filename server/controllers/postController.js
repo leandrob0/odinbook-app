@@ -38,7 +38,7 @@ exports.create_post = [
 ];
 
 exports.self_posts = async (req, res) => {
-  const posts = await Post.find({ author: req.params.id }).populate('author');
+  const posts = await Post.find({ author: req.params.id }).populate('author').populate('likes').populate('comments');
 
   // I pass it an empty array, because this function merges two arrays and does the rest.
   // So if i pass an empty array, the original one wont change.
@@ -51,9 +51,9 @@ exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
   const postsFromSelf = await Post.find({ author: req.user._id }).populate(
     'author'
-  );
+  ).populate('likes').populate('comments');
   const promises = friends.map(async (friend) => {
-    const posts = await Post.find({ author: friend._id }).populate('author');
+    const posts = await Post.find({ author: friend._id }).populate('author').populate('likes').populate('comments');
     return posts;
   });
   const friendsPosts = await Promise.all(promises);
