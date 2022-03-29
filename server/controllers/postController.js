@@ -65,3 +65,14 @@ exports.timeline_posts = async (req, res) => {
 
   res.status(200).json({ posts: allPostsSortedAndDateFormated });
 };
+
+exports.like_post = async (req, res) => {
+  const post = await Post.findById(req.params.id).populate('likes');
+  const postCopy = post;
+  postCopy.likes = postCopy.likes.concat(req.user._id);
+
+  const updatedPost = await Post.findByIdAndUpdate(req.params.id, postCopy, {
+    new: true,
+  }).populate('likes');
+  res.status(200).json({ post: updatedPost });
+};
