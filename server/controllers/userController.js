@@ -51,7 +51,7 @@ exports.handle_request = async (req, res) => {
   const status = req.body.status;
   const requestHandled = req.params.id;
 
-  if (!status) {
+  if (status === undefined) {
     return res.status(404).json({
       msg: 'An acceptance status must be sent.',
     });
