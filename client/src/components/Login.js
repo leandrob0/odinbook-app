@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { loginUserLocal, loginUserFacebook } from '../services/users';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import { login } from '../features/user';
 import logoFacebook from '../images/simbolo-de-la-aplicacion-de-facebook.png';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({msg: ''});
+  const socket = useSelector((state) => state.socket.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,6 +64,7 @@ const Login = () => {
     });
     if (response.user) {
       setValues(response.user, response.token);
+      socket.emit('newUser', response.user);
       return navigate('/timeline');
     } else {
       setErrors({msg: response.msg});

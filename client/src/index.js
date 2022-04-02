@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import userReducer from './features/user';
 import postReducer from './features/post';
@@ -14,6 +14,7 @@ const store = configureStore({
     post: postReducer,
     socket: socketReducer,
   },
+  middleware: () => getDefaultMiddleware({serializableCheck: false})
 });
 
 ReactDOM.render(

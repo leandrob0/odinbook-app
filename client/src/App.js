@@ -3,14 +3,18 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
+import { useDispatch } from 'react-redux';
+import { setSocket } from './features/socket';
+
 import Homepage from './components/pages/Homepage';
 import Timeline from './components/pages/Timeline';
 import Profile from './components/pages/Profile';
 
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
-    const socket = io('http://localhost:4004');
-  }, []);
+    dispatch(setSocket(io('http://localhost:4004')));
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Routes>
