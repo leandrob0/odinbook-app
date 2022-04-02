@@ -6,15 +6,12 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import userReducer from './features/user';
 import postReducer from './features/post';
-import socketReducer from './features/socket';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     post: postReducer,
-    socket: socketReducer,
   },
-  middleware: () => getDefaultMiddleware({serializableCheck: false})
 });
 
 ReactDOM.render(

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { loginUserLocal, loginUserFacebook } from '../services/users';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../features/user';
 import logoFacebook from '../images/simbolo-de-la-aplicacion-de-facebook.png';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState({msg: ''});
-  const socket = useSelector((state) => state.socket.value);
+  const [errors, setErrors] = useState({ msg: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ const Login = () => {
         last_name: user.last_name,
         profile_pic: user.profile_pic,
         friends: user.friends,
-        friendRequests: user.friendRequests
+        friendRequests: user.friendRequests,
       })
     );
   };
@@ -38,9 +37,9 @@ const Login = () => {
   const submitLogin = async (e) => {
     e.preventDefault();
 
-    if(!formValues.email || !formValues.password) {
-      setErrors({msg: 'Both fields must be filled.'});
-      return ;
+    if (!formValues.email || !formValues.password) {
+      setErrors({ msg: 'Both fields must be filled.' });
+      return;
     }
 
     const body = {
@@ -53,7 +52,7 @@ const Login = () => {
       setValues(response.user, response.token);
       return navigate('/timeline');
     } else {
-      setErrors({msg: response.msg});
+      setErrors({ msg: response.msg });
     }
   };
 
@@ -64,10 +63,9 @@ const Login = () => {
     });
     if (response.user) {
       setValues(response.user, response.token);
-      socket.emit('newUser', response.user);
       return navigate('/timeline');
     } else {
-      setErrors({msg: response.msg});
+      setErrors({ msg: response.msg });
     }
   };
 
@@ -77,7 +75,7 @@ const Login = () => {
       setValues(response.user, response.token);
       return navigate('/timeline');
     } else {
-      setErrors({msg: response.msg});
+      setErrors({ msg: response.msg });
     }
   };
 
@@ -105,9 +103,9 @@ const Login = () => {
           value={formValues.password}
           onChange={(e) => handleChange(e)}
         />
-        {errors.msg !== '' &&
+        {errors.msg !== '' && (
           <p className="text-red-500 font-bold p-2">{errors.msg}</p>
-        }
+        )}
         <button className="border-0 rounded p-2 m-2 text-white font-bold shadow-md shadow-blue-500/50 bg-blue-500 hover:bg-blue-600 transition w-72 lg:w-96">
           Log in
         </button>
@@ -139,7 +137,7 @@ const Login = () => {
           </button>
         )}
       />
-  </>
+    </>
   );
 };
 
