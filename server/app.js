@@ -9,10 +9,7 @@ const compression = require('compression');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require('socket.io');
-const io = new Server(server, { cors: '*' });
 const connectDb = require('./config/db');
-const socketFunctions = require('./config/socket');
 
 connectDb();
 
@@ -42,22 +39,6 @@ app.use('/api/comments', commentsRouter);
 const errors = require('./middleware/errorHandler');
 app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
-
-// Socket.io
-let allUsers = [];
-
-io.on('connection', (socket) => {
-  console.log('connected');
-  socket.on('newUser', (user) => {
-    allUsers = socketFunctions.addNewUser(allUsers, user, socket.id);
-    console.log('done');
-  });
-
-  socket.on('sendFriendRequest', ({ senderUser, receiverUser }) => {
-    const receiver = socketFunctions.getUser(allUsers, receiverUser.email);
-    socket.to(receiver.socketId).emit('receiveFriendRequest', { senderUser });
-  });
-});
 
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
