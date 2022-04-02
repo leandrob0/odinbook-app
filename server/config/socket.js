@@ -1,28 +1,11 @@
-const app = require('../app');
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require('socket.io');
-const io = new Server(server, { cors: '*' });
-
-let allUsers = [];
-
-const addNewUser = (user, socketId) => {
+const addNewUser = (allUsers, user, socketId) => {
   !allUsers.some((x) => x.email === user.email) &&
     allUsers.push({ user, socketId });
+  return allUsers;
 };
 
-const getUser = (email) => {
+const getUser = (allUsers, email) => {
   return allUsers.find((user) => user.email === email);
 };
 
-// Socket.io
-io.on('connection', (socket) => {
-  socket.on('newUser', (user) => {
-    addNewUser(user, socket.id);
-  });
-
-  socket.on('sendFriendRequest', ({ senderUser, receiverUser }) => {
-    const receiver = getUser(receiverUser.email);
-    socket.to(receiver.socketId).emit('receiveFriendRequest', { senderUser });
-  });
-});
+module.exports = { addNewUser, getUser };
