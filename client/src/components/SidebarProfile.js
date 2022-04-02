@@ -20,7 +20,11 @@ const SidebarProfile = ({ user }) => {
       </div>
       {loggedUser.id !== user._id &&
         !checkFriend(loggedUser.friends, user.email) &&
-        user && <div>Add friend</div>}
+        user && (
+          <div className="p-2 m-4 text-green-600 border border-green-800 rounded bg-white shadow-sm shadow-green-900 transition hover:cursor-pointer hover:shadow-green-600">
+            Add friend
+          </div>
+        )}
       <div className="flex flex-wrap">
         {user.friends &&
           user.friends.forEach((friend) => {
