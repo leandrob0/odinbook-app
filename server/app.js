@@ -9,8 +9,6 @@ const compression = require('compression');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require('socket.io');
-const io = new Server(server, { cors: '*' });
 const connectDb = require('./config/db');
 
 connectDb();
@@ -41,15 +39,6 @@ app.use('/api/comments', commentsRouter);
 const errors = require('./middleware/errorHandler');
 app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
-
-// Socket.io
-io.on('connection', (socket) => {
-  console.log('Someone has connected.');
-
-  socket.on('disconnect', () => {
-    console.log('Someone has left');
-  })
-})
 
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
