@@ -6,11 +6,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import userReducer from './features/user';
 import postReducer from './features/post';
+import notifReducer from './features/notifications';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     post: postReducer,
+    notification: notifReducer,
   },
 });
 

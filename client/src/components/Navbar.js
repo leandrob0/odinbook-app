@@ -5,22 +5,40 @@ import {
   BellIcon,
   SearchIcon,
 } from '@heroicons/react/solid';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
-import { getAllUsers } from '../services/users';
+import { getAllUsers, getUserInfo } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 
 import ModalSearch from './ModalSearch';
 import ModalUser from './ModalUser';
+import { addNotification } from '../features/notifications';
 
 const Navbar = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [modalSearch, setModalSearch] = useState(false);
   const [modalUser, setModalUser] = useState(false);
+  const userId = useSelector((state) => state.user.value.id);
+  const notifications = useSelector((state) => state.notification.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadFriendRequests = async () => {
+      const user = await getUserInfo(
+        JSON.parse(localStorage.getItem('token')),
+        userId
+      );
+      if (notifications.length !== user.info.friendRequests.length) {
+        for(let i = notifications.length; i < user.friendRequests.length; i++) {
+          dispatch(addNotification(user.friendRequests[i]));
+        }
+      }
+    };
+    loadFriendRequests();
+  }, [dispatch, userId, notifications]);
 
   // Every time the user clicks on the search bar, every user available in the db, will be saved to an state, to lated filter on user search.
   const getUsers = async () => {
