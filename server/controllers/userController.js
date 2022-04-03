@@ -18,7 +18,7 @@ exports.friend_request = async (req, res) => {
     (idFriend) => idFriend.toHexString() === id
   );
   const foundRequest = friend.friendRequests.findIndex(
-    (idFriend) => idFriend.toHexString() === id
+    (idFriend) => idFriend.toHexString() === req.user._id.toHexString()
   );
 
   if (foundRequest !== -1) {
