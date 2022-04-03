@@ -16,23 +16,16 @@ const ModalNotif = ({ closeModalNotif }) => {
       >
         <section className="flex flex-col">
           {notifications.length === 0 ? (
-            <p>There are no notifications for you!</p>
+            <p className='py-4 px-2'>There are no notifications for you!</p>
           ) : (
             notifications.map((noti) => {
               if (noti.type === 'request') {
-                return <FriendRequest />;
+                return <FriendRequest key={noti.user._id} id={noti.user._id} friend={noti.user}/>;
+              } else {
+                  return <p>Not done yet</p>
               }
             })
           )}
-          <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
-            Profile
-          </p>
-          <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
-            Settings
-          </p>
-          <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
-            Logout
-          </p>
         </section>
       </div>
     </>
