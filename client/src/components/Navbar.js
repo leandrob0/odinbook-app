@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
-import { getAllUsers, getUserInfo } from '../services/users';
+import { getAllUsers, getFriendsRequests } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 
 import ModalSearch from './ModalSearch';
@@ -27,17 +27,17 @@ const Navbar = () => {
 
   useEffect(() => {
     const loadFriendRequests = async () => {
-      const user = await getUserInfo(
-        JSON.parse(localStorage.getItem('token')),
-        userId
+      const requests = await getFriendsRequests(
+        JSON.parse(localStorage.getItem('token'))
       );
-      if (notifications.length !== user.info.friendRequests.length) {
-        for(let i = notifications.length; i < user.friendRequests.length; i++) {
-          dispatch(addNotification(user.friendRequests[i]));
+      if (notifications.length !== requests.requests.friendRequests.length) {
+        for(let i = notifications.length; i < requests.requests.friendRequests.length; i++) {
+          dispatch(addNotification({user: requests.requests.friendRequests[i], type:'request'}));
         }
       }
     };
     loadFriendRequests();
+    console.log(notifications);
   }, [dispatch, userId, notifications]);
 
   // Every time the user clicks on the search bar, every user available in the db, will be saved to an state, to lated filter on user search.

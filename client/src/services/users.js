@@ -41,7 +41,7 @@ export const getAllUsers = async (token) => {
   }
 };
 
-export const getUserInfo = async (token,id) => {
+export const getUserInfo = async (token, id) => {
   try {
     const result = await axios.get(`${baseUrl}/info/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -50,4 +50,30 @@ export const getUserInfo = async (token,id) => {
   } catch (err) {
     return err.response.data;
   }
-}
+};
+
+export const getFriendsRequests = async (token) => {
+  try {
+    const result = await axios.get(`${baseUrl}/requests`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export const sendFriendRequest = async (token, id) => {
+  try {
+    const result = await axios.put(
+      `${baseUrl}/friend_request/${id}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
