@@ -8,6 +8,13 @@ exports.all_users = async (req, res) => {
   res.status(200).json({ users });
 };
 
+exports.requests = async (req, res) => {
+  const requests = await User.findById(req.user._id, 'friendRequests').populate(
+    'friendRequests'
+  );
+  res.status(200).json({ requests });
+};
+
 exports.friend_request = async (req, res) => {
   const id = req.params.id;
   // Searches for the friend that i want to add.
@@ -106,4 +113,4 @@ exports.handle_request = async (req, res) => {
 exports.info_by_id = async (req, res) => {
   const info = await User.findById(req.params.id).populate('friends');
   res.status(200).json({ info });
-}
+};

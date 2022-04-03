@@ -32,6 +32,9 @@ router.get('/', authorizeUser, userController.all_users);
 // GET Returns all the info from the specified user (for the profile page).
 router.get('/info/:id', authorizeUser, userController.info_by_id);
 
+// GET Returns all the friend requests that the user has.
+router.get('/requests', authorizeUser, userController.requests);
+
 // PUT Accepts and id from the user you want to send the request to, returns the user with the friendRequests array updated.
 router.put('/friend_request/:id', authorizeUser, userController.friend_request);
 
