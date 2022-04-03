@@ -8,18 +8,20 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
+import { addNotification } from '../features/notifications';
 import { getAllUsers, getFriendsRequests } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 
 import ModalSearch from './ModalSearch';
 import ModalUser from './ModalUser';
-import { addNotification } from '../features/notifications';
+import ModalNotif from './ModalNotif';
 
 const Navbar = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [modalSearch, setModalSearch] = useState(false);
   const [modalUser, setModalUser] = useState(false);
+  const [modalNotif, setModalNotif] = useState(false);
   const userId = useSelector((state) => state.user.value.id);
   const notifications = useSelector((state) => state.notification.value);
   const dispatch = useDispatch();
@@ -37,7 +39,6 @@ const Navbar = () => {
       }
     };
     loadFriendRequests();
-    console.log(notifications);
   }, [dispatch, userId, notifications]);
 
   // Every time the user clicks on the search bar, every user available in the db, will be saved to an state, to lated filter on user search.
@@ -74,6 +75,11 @@ const Navbar = () => {
     setModalUser(!modalUser);
   };
 
+  const notifModal = (e) => {
+    e.stopPropagation();
+    setModalNotif(!modalNotif);
+  }
+
   return (
     <nav className="flex justify-between items-center p-2 w-full bg-white shadow-md">
       <div>
@@ -104,7 +110,8 @@ const Navbar = () => {
       </div>
       <div className="flex">
         <div className="relative">
-          <BellIcon className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
+          <BellIcon onClick={(e) => notifModal(e)} className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
+          {modalNotif && <ModalNotif closeModalNotif={notifModal}/>}
         </div>
         <div className="relative">
           <UserIcon
