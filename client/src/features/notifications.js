@@ -16,7 +16,7 @@ const notificationSlice = createSlice({
             ...action.payload,
             id: curNotif[curNotif.length - 1].id + 1,
           })
-        : { ...action.payload, id: 0 };
+        : [{ ...action.payload, id: 0 }];
       state.value = updatedAr;
       localStorage.setItem('notifications', JSON.stringify(updatedAr));
     },

@@ -1,4 +1,9 @@
+import { useSelector } from 'react-redux';
+import FriendRequest from './FriendRequest';
+
 const ModalNotif = ({ closeModalNotif }) => {
+  const notifications = useSelector((state) => state.notification.value);
+
   return (
     <>
       <div
@@ -10,6 +15,15 @@ const ModalNotif = ({ closeModalNotif }) => {
         id="dropdown-notif"
       >
         <section className="flex flex-col">
+          {notifications.length === 0 ? (
+            <p>There are no notifications for you!</p>
+          ) : (
+            notifications.map((noti) => {
+              if (noti.type === 'request') {
+                return <FriendRequest />;
+              }
+            })
+          )}
           <p className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition">
             Profile
           </p>
