@@ -98,7 +98,7 @@ exports.handle_request = async (req, res) => {
     );
   }
 
-  await User.findByIdAndUpdate(req.body.id, userSending);
+  await User.findByIdAndUpdate(requestHandled, userSending);
   const newUserAccepting = await User.findByIdAndUpdate(
     req.user._id,
     userAccepting,
