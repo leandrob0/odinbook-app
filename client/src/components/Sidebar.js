@@ -1,13 +1,17 @@
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 function Sidebar() {
-  const testFriends = [
-    'Leandro Bovino',
-    'Julio Dechert',
-    'Bruno Pizzagalli',
-    'Agustin Palomino',
-    "Lucas D'unno",
-    'Ezequiel Garcia',
-    'Nicolas Pulti',
-  ];
+  const [friends, setFriends] = useState([]);
+  const friendsFetched = useSelector((state) => state.user.value.friends);
+
+  useEffect(() => {
+    if(friendsFetched.length > 7) {
+      setFriends(friendsFetched.reverse().slice(0,7));
+    } else {
+      setFriends(friendsFetched.reverse());
+    }
+  }, [friendsFetched])
 
   return (
     <aside className="flex flex-col items-start p-2 max-w-screen-md">
@@ -16,7 +20,7 @@ function Sidebar() {
           Friends:
         </h2>
       </div>
-      <DesktopFriends friends={testFriends} />
+      {friends.length > 0 ? <DesktopFriends friends={friends} /> : <div>Add friends!</div>}
     </aside>
   );
 }
