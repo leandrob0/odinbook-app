@@ -17,7 +17,7 @@ function Sidebar() {
     <aside className="flex flex-col items-start p-2 max-w-screen-md">
       <div>
         <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">
-          Friends:
+          New Friends:
         </h2>
       </div>
       {friends.length > 0 ? <DesktopFriends friends={friends} /> : <div>Add friends!</div>}
