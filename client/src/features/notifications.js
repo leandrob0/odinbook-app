@@ -10,8 +10,8 @@ const notificationSlice = createSlice({
   reducers: {
     addNotification: (state, action) => {
       const curNotif =
-        state.value.notification ? state.value.notification : null;
-      const updatedAr = curNotif !== null
+        state.value ? state.value : null;
+      const updatedAr = curNotif.lenght > 0
         ? curNotif.concat({
             ...action.payload,
             id: curNotif[curNotif.length - 1].id + 1,
@@ -21,7 +21,7 @@ const notificationSlice = createSlice({
       localStorage.setItem('notifications', JSON.stringify(updatedAr));
     },
     deleteNotification: (state, action) => {
-      const curNotif = state.value.notification;
+      const curNotif = state.value;
       const updatedAr = curNotif.filter(
         (noti) => noti.id !== action.payload.id
       );

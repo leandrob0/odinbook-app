@@ -77,3 +77,16 @@ export const sendFriendRequest = async (token, id) => {
     return err.response.data;
   }
 };
+
+export const handleFriendRequest = async (token, id, status) => {
+  try {
+    const result = await axios.put(
+      `${baseUrl}/handle_request/${id}`,
+      { status },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

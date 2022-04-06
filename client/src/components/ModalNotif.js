@@ -20,7 +20,7 @@ const ModalNotif = ({ closeModalNotif }) => {
           ) : (
             notifications.map((noti) => {
               if (noti.type === 'request') {
-                return <FriendRequest key={noti.user._id} id={noti.user._id} friend={noti.user}/>;
+                return <FriendRequest key={noti.id} id={noti.id} friend={noti.user}/>;
               } else {
                   return <p>Not done yet</p>
               }
