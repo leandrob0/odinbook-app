@@ -60,7 +60,7 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-      <main className={width < 800 ? 'flex flex-wrap' : 'flex'}>
+      <main className={width < 800 ? 'flex flex-wrap bg-gray-100' : 'flex bg-gray-100'}>
         {user && <SidebarProfile user={user} />}
         <PostsContainer loading={loading} />
       </main>
