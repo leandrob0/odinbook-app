@@ -10,7 +10,7 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="flex flex-col items-start p-2">
+    <aside className="flex flex-col items-start p-2 max-w-screen-md">
       <div>
         <h2 className="text-xs sm:text-sm md:text-base py-2 font-semibold">
           Friends:
