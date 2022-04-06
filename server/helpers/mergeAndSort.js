@@ -1,6 +1,6 @@
 const mergeAndSort = (arr1, arr2) => {
-  const arr1Formated = formatDates(arr1);
-  const arr2Formated = formatDates(arr2);
+  const arr1Formated = arr1.length > 0 ? formatDates(arr1) : arr1;
+  const arr2Formated = arr2.length > 0 ? formatDates(arr2) : arr2;
   const mergeArr = [...arr1Formated, ...arr2Formated];
   const sortedArr = mergeArr.sort((a, b) =>
     a.createdAt > b.createdAt ? -1 : 1

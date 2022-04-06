@@ -59,7 +59,7 @@ exports.timeline_posts = async (req, res) => {
   const friendsPosts = await Promise.all(promises);
 
   const allPostsSortedAndDateFormated = mergeAndSort(
-    friendsPosts,
+    friendsPosts.flat(),
     postsFromSelf
   );
 
