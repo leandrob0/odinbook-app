@@ -29,8 +29,12 @@ const userSlice = createSlice({
         friendRequests: [],
       };
     },
+    addFriend: (state, action) => {
+      state.value.friends = state.value.friends.concat(action.payload);
+      localStorage.setItem('user', JSON.stringify(state.value));
+    }
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout , addFriend } = userSlice.actions;
 export default userSlice.reducer;

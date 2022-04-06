@@ -3,18 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const postSlice = createSlice({
   name: 'post',
   initialState: {
-    value: { posts: [] },
+    value: [],
   },
   reducers: {
     setPosts: (state, action) => {
-      state.value = { posts: action.payload};
+      state.value = action.payload;
     },
     addPost: (state, action) => {
-      const curPosts = state.value ? state.value.posts : null;
+      const curPosts = state.value ? state.value : null;
       const updatedAr = curPosts
         ? curPosts.concat(action.payload)
-        : action.payload;
-      state.value = {posts: updatedAr};
+        : [action.payload];
+      state.value = updatedAr;
     },
   },
 });

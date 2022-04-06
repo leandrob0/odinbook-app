@@ -30,12 +30,12 @@ const DesktopFriends = ({ friends }) => {
     <section className="flex flex-col items-start">
       {friends.map((friend) => {
         return (
-          <div key={friend} className="flex my-2 items-center">
+          <div key={friend._id} className="flex my-2 items-center">
             <div className="pr-1">
               <div className="bg-blue-600 rounded-full h-5 w-5"></div>
             </div>
             <div className="pl-1">
-              <p className="text-xs md:text-sm">{friend}</p>
+              <p className="text-xs md:text-sm">{friend.first_name} {friend.last_name}</p>
             </div>
           </div>
         );

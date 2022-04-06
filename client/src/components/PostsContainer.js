@@ -6,7 +6,7 @@ import Loading from './Loading';
 
 function PostsContainer({ setModalOpen , loading }) {
   const { width } = useWindowDimensions();
-  const posts = useSelector((state) => state.post.value.posts);
+  const posts = useSelector((state) => state.post.value);
   const userPicture = useSelector((state) => state.user.value.profile_pic);
 
   return (
@@ -23,7 +23,7 @@ function PostsContainer({ setModalOpen , loading }) {
         />
       )}
       {loading && <Loading />}
-      {(posts.length === 0 && !loading) && <div>There are no posts.</div>}
+      {(!posts && !loading) && <div>There are no posts.</div>}
       {posts && (
         posts.map((post) => {
           return (

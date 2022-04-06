@@ -1,6 +1,8 @@
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { useDispatch } from 'react-redux';
+
 import { deleteNotification } from '../features/notifications';
+import { addFriend } from '../features/user';
 import { handleFriendRequest } from '../services/users';
 
 const FriendRequest = ({ id, friend }) => {
@@ -15,9 +17,11 @@ const FriendRequest = ({ id, friend }) => {
     const result = await handleFriendRequest(token, friend._id, status);
 
     if(result.msg) {
-      console.log(result.msg);
+      alert(result.msg);
+    } else {
+      console.log(result.user);
+      dispatch(addFriend(result.user));
     }
-      //agregarlo a el array de amigos en el estado user.
   };
 
   return (
