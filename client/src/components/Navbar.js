@@ -22,6 +22,7 @@ const Navbar = () => {
   const [modalSearch, setModalSearch] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [modalNotif, setModalNotif] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
   const userId = useSelector((state) => state.user.value.id);
   const notifications = useSelector((state) => state.notification.value);
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Navbar = () => {
         JSON.parse(localStorage.getItem('token'))
       );
       if (notifications.length !== requests.requests.friendRequests.length) {
+        setNotificationCount(requests.requests.friendRequests.length - notifications.length);
         for(let i = notifications.length; i < requests.requests.friendRequests.length; i++) {
           dispatch(addNotification({user: requests.requests.friendRequests[i], type:'request'}));
         }
@@ -77,6 +79,7 @@ const Navbar = () => {
 
   const notifModal = (e) => {
     e.stopPropagation();
+    setNotificationCount(0);
     setModalNotif(!modalNotif);
   }
 
@@ -109,14 +112,15 @@ const Navbar = () => {
         )}
       </div>
       <div className="flex">
-        <div className="relative">
-          <BellIcon onClick={(e) => notifModal(e)} className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1" />
+        <div className="relative hover:cursor-pointer">
+          <BellIcon onClick={(e) => notifModal(e)} className="h-7 w-7 text-gray-500 hover:text-gray-600 transition relative md:h-7 md:w-7 mx-1" />
+          {notificationCount > 0 && <div onClick={(e) => notifModal(e)} className='absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex justify-center items-center'>{notificationCount}</div>}
           {modalNotif && <ModalNotif closeModalNotif={notifModal}/>}
         </div>
         <div className="relative">
           <UserIcon
             onClick={(e) => userOptions(e)}
-            className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1"
+            className="h-7 w-7 text-gray-500 hover:text-gray-600 transition md:h-7 md:w-7 mx-1 hover:cursor-pointer"
           />
           {modalUser && <ModalUser closeModalUser={userOptions} />}
         </div>
