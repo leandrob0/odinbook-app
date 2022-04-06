@@ -6,20 +6,18 @@ import { handleFriendRequest } from '../services/users';
 const FriendRequest = ({ id, friend }) => {
   const dispatch = useDispatch();
 
-  const notificationHandled = (e, status) => {
+  const notificationHandled = async (e, status) => {
     e.stopPropagation();
 
     const token = JSON.parse(localStorage.getItem('token'));
 
-    if (!status) {
-      // The user rejected the friend request.
-      dispatch(deleteNotification({ id }));
-      handleFriendRequest(token, friend._id, status);
-    } else {
-      // The user accepted the friend request.
-      dispatch(deleteNotification({ id }));
-      handleFriendRequest(token, friend._id, status);
+    dispatch(deleteNotification({ id }));
+    const result = await handleFriendRequest(token, friend._id, status);
+
+    if(result.msg) {
+      console.log(result.msg);
     }
+      //agregarlo a el array de amigos en el estado user.
   };
 
   return (

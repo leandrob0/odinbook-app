@@ -23,7 +23,6 @@ const Navbar = () => {
   const [modalUser, setModalUser] = useState(false);
   const [modalNotif, setModalNotif] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
-  const userId = useSelector((state) => state.user.value.id);
   const notifications = useSelector((state) => state.notification.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +40,8 @@ const Navbar = () => {
       }
     };
     loadFriendRequests();
-  }, [dispatch, userId, notifications]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Every time the user clicks on the search bar, every user available in the db, will be saved to an state, to lated filter on user search.
   const getUsers = async () => {
