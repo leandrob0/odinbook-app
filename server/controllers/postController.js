@@ -69,17 +69,20 @@ exports.timeline_posts = async (req, res) => {
 exports.like_post = async (req, res) => {
   const post = await Post.findById(req.params.id).populate('likes');
   const postCopy = post;
+  let found = 0;
 
   for (let like in postCopy.likes) {
     if (like === req.user._id) {
-      return res
-        .status(400)
-        .json({ msg: 'The user already liked that comment.' });
+      found = 1;
     }
   }
 
-  postCopy.likes = postCopy.likes.concat(req.user._id);
-
+  if(found) {
+    postCopy.likes = postCopy.likes.filter(id => id.toHexString() !== req.user._id.toHexString());
+  } else {
+    postCopy.likes = postCopy.likes.concat(req.user._id);
+  }
+  
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, postCopy, {
     new: true,
   }).populate('likes');
