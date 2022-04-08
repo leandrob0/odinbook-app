@@ -38,7 +38,10 @@ exports.create_post = [
 ];
 
 exports.self_posts = async (req, res) => {
-  const posts = await Post.find({ author: req.params.id }).populate('author').populate('likes').populate('comments');
+  const posts = await Post.find({ author: req.params.id })
+    .populate('author')
+    .populate('likes')
+    .populate('comments');
 
   // I pass it an empty array, because this function merges two arrays and does the rest.
   // So if i pass an empty array, the original one wont change.
@@ -49,11 +52,15 @@ exports.self_posts = async (req, res) => {
 
 exports.timeline_posts = async (req, res) => {
   const friends = await User.find({ friends: req.user._id });
-  const postsFromSelf = await Post.find({ author: req.user._id }).populate(
-    'author'
-  ).populate('likes').populate('comments');
+  const postsFromSelf = await Post.find({ author: req.user._id })
+    .populate('author')
+    .populate('likes')
+    .populate('comments');
   const promises = friends.map(async (friend) => {
-    const posts = await Post.find({ author: friend._id }).populate('author').populate('likes').populate('comments');
+    const posts = await Post.find({ author: friend._id })
+      .populate('author')
+      .populate('likes')
+      .populate('comments');
     return posts;
   });
   const friendsPosts = await Promise.all(promises);
@@ -71,18 +78,20 @@ exports.like_post = async (req, res) => {
   const postCopy = post;
   let found = 0;
 
-  for (let like in postCopy.likes) {
-    if (like === req.user._id) {
+  postCopy.likes.forEach((like) => {
+    if (like._id.toHexString() === req.user._id.toHexString()) {
       found = 1;
     }
-  }
+  });
 
-  if(found) {
-    postCopy.likes = postCopy.likes.filter(id => id.toHexString() !== req.user._id.toHexString());
+  if (found) {
+    postCopy.likes = postCopy.likes.filter(
+      (like) => like._id.toHexString() !== req.user._id.toHexString()
+    );
   } else {
     postCopy.likes = postCopy.likes.concat(req.user._id);
   }
-  
+
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, postCopy, {
     new: true,
   }).populate('likes');
