@@ -16,8 +16,17 @@ const postSlice = createSlice({
         : [action.payload];
       state.value = updatedAr;
     },
+    updatePost: (state, action) => {
+      const curPosts = state.value;
+      for (let i = 0; i < curPosts; i++) {
+        if (action.payload.post._id === curPosts[i]._id) {
+          curPosts[i] = action.payload.post;
+        }
+      }
+      state.value = curPosts;
+    },
   },
 });
 
-export const { setPosts, addPost } = postSlice.actions;
+export const { setPosts, addPost, updatePost } = postSlice.actions;
 export default postSlice.reducer;

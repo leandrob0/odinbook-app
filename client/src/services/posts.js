@@ -34,3 +34,16 @@ export const getPostsFromUser = async (token, id) => {
     return err.response.data;
   }
 };
+
+export const likePost = async (token, id) => {
+  try {
+    const result = await axios.put(
+      `${baseUrl}/like/${id}`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
