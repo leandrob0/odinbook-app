@@ -1,16 +1,29 @@
-import CreateComment from './CreateComment';
+import { useState } from 'react';
 
-const Comments = ({ comments }) => {
+import CreateComment from './CreateComment';
+import SingleComment from './SingleComment';
+
+const Comments = ({ postId, comments, amountComments, setAmountComments }) => {
+  const [allComments, setAllComments] = useState(comments);
+
   return (
     <section className="w-full mt-4">
       <div className="border-t w-full flex flex-col items-center justify-center pt-4">
-        {comments.length > 0 ? (
-          <p>single comment component</p>
+        {allComments.length > 0 ? (
+          allComments.map((comment) => {
+            return <SingleComment key={comment._id} comment={comment} />;
+          })
         ) : (
           <p>There are no comments :(</p>
         )}
       </div>
-      <CreateComment />
+      <CreateComment
+        postId={postId}
+        allComments={allComments}
+        setAllComments={setAllComments}
+        amountComments={amountComments}
+        setAmountComments={setAmountComments}
+      />
     </section>
   );
 };

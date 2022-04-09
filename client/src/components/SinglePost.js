@@ -89,7 +89,14 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
           Comment
         </p>
       </div>
-      {showComments && <Comments comments={comments} />}
+      {showComments && (
+        <Comments
+          postId={postId}
+          comments={comments}
+          amountComments={amountComments}
+          setAmountComments={setAmountComments}
+        />
+      )}
     </article>
   );
 }
