@@ -43,7 +43,7 @@ function Timeline() {
     <div className="w-full h-full">
       <Navbar />
       <main className="flex h-full bg-gray-100 pt-2">
-        {width > 600 && <Sidebar />}
+        {width > 700 && <Sidebar />}
         <PostsContainer setModalOpen={setModalOpen} loading={loading} />
         {modalOpen && <CreatePost setModalOpen={setModalOpen} />}
       </main>
