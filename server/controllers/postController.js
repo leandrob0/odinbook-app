@@ -55,12 +55,18 @@ exports.timeline_posts = async (req, res) => {
   const postsFromSelf = await Post.find({ author: req.user._id })
     .populate('author')
     .populate('likes')
-    .populate('comments');
+    .populate({
+      path: 'comments',
+      populate: { path: 'author', model: User },
+    });
   const promises = friends.map(async (friend) => {
     const posts = await Post.find({ author: friend._id })
       .populate('author')
       .populate('likes')
-      .populate('comments');
+      .populate({
+        path: 'comments',
+        populate: { path: 'author', model: User },
+      });
     return posts;
   });
   const friendsPosts = await Promise.all(promises);
