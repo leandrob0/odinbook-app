@@ -1,3 +1,5 @@
 export const count = (arr) => {
-  return arr.reduce((accum) => accum++, 0);
+  return arr.reduce((accum) => {
+    return accum + 1;
+  }, 0);
 };

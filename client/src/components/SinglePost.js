@@ -21,7 +21,7 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
 
     const result = await likePost(
       JSON.parse(localStorage.getItem('token')),
-      e.target.id
+      postId
     );
     dispatch(updatePost(result));
   };
@@ -59,7 +59,6 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
       </div>
       <div className="flex justify-around w-full text-gray-800 font-medium pt-4">
         <p
-          id={postId}
           onClick={(e) => {
             likePressed(e);
             setLiked(!liked);
@@ -72,7 +71,6 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
           Like
         </p>
         <p
-          id={postId}
           className="hover:scale-110 hover:cursor-pointer transition"
         >
           Comment
