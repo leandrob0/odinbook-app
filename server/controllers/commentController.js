@@ -42,15 +42,21 @@ exports.create_comment = async (req, res) => {
 
 exports.like_comment = async (req, res) => {
   const comment = await Comment.findById(req.params.id);
+  let found = 0;
 
-  for (let like in comment.likes) {
-    if (like === req.user._id) {
-      return res
-        .status(400)
-        .json({ msg: 'The user already liked that comment.' });
-    }
+  comment.likes.forEach(like => {
+    if(like.toHexString() === req.user._id.toHexString()) {
+      found = 1;
+    } 
+  })
+
+  if(found) {
+    comment.likes = comment.likes.filter(id => id.toHexString() !== req.user._id.toHexString());
+  } else {
+    comment.likes = comment.likes.concat(req.user._id);
   }
 
-  comment.likes = comment.likes.concat(req.user._id);
   await Comment.findByIdAndUpdate(req.params.id, comment);
+
+  res.status(200).end();
 };
