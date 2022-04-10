@@ -4,27 +4,38 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import SinglePost from './SinglePost';
 import Loading from './Loading';
 
-function PostsContainer({ setModalOpen , loading }) {
+function PostsContainer({ setModalOpen, loading }) {
   const { width } = useWindowDimensions();
   const posts = useSelector((state) => state.post.value);
   const userPicture = useSelector((state) => state.user.value.profile_pic);
 
   return (
     <section className="w-full min-h-screen max-w-screen-xl flex flex-col items-center">
-      {width <= 700 ? (
-        <ToggleCreateMobile
-          userPicture={userPicture}
-          setModalOpen={setModalOpen}
-        />
-      ) : (
-        <ToggleCreateDesktop
-          userPicture={userPicture}
-          setModalOpen={setModalOpen}
-        />
-      )}
+      <div
+        className={`flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm ${
+          width <= 700 ? 'w-full' : 'w-1/2'
+        }`}
+      >
+        <a
+          className="hover:cursor-pointer"
+          href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}
+        >
+          <img
+            src={'/' + userPicture}
+            alt="author"
+            className="h-10 w-10 rounded-full flex-shrink-0 mr-3"
+          />
+        </a>
+        <div
+          className="rounded-2xl bg-gray-200 text-gray-600 p-2 w-full hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition"
+          onClick={() => setModalOpen(true)}
+        >
+          What are you thinking?
+        </div>
+      </div>
       {loading && <Loading />}
-      {(!posts && !loading) && <div>There are no posts.</div>}
-      {posts && (
+      {!posts && !loading && <div>There are no posts.</div>}
+      {posts &&
         posts.map((post) => {
           return (
             <SinglePost
@@ -37,56 +48,9 @@ function PostsContainer({ setModalOpen , loading }) {
               attached_image={post.attached_image}
             />
           );
-        })
-      )}
+        })}
     </section>
   );
 }
-
-const ToggleCreateDesktop = ({
-  userPicture,
-  setModalOpen,
-}) => {
-  return (
-    <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-1/2">
-      <a className='hover:cursor-pointer' href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}>
-        <img
-          src={'/'+userPicture}
-          alt="author"
-          className="h-10 w-10 rounded-full mr-3"
-        />
-      </a>
-      <div
-        className="rounded-2xl bg-gray-200 text-gray-600 p-2 w-full hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition"
-        onClick={() => setModalOpen(true)}
-      >
-        What are you thinking?
-      </div>
-    </div>
-  );
-};
-
-const ToggleCreateMobile = ({
-  userPicture,
-  setModalOpen,
-}) => {
-  return (
-    <div className="flex items-center border-0 border-gray-200 bg-white rounded-md p-4 m-4 shadow-sm w-full">
-      <a className='hover:cursor-pointer' href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}>
-        <img
-          src={'/'+userPicture}
-          alt="author"
-          className="h-10 w-10 rounded-full flex-shrink-0 mr-3"
-        />
-      </a>
-      <div
-        className="rounded-2xl bg-gray-200 text-gray-600 p-2 w-full hover:cursor-pointer hover:bg-gray-300 hover:text-gray-700 transition"
-        onClick={() => setModalOpen(true)}
-      >
-        What are you thinking?
-      </div>
-    </div>
-  );
-};
 
 export default PostsContainer;
