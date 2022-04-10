@@ -6,7 +6,6 @@ import { updatePost } from '../features/post';
 
 const CreateComment = ({
   postId,
-  allComments,
   setAllComments,
   amountComments,
   setAmountComments,
@@ -26,7 +25,9 @@ const CreateComment = ({
       alert(result.msg);
     } else {
       dispatch(updatePost(result));
-      //setAmountComments(amountComments + 1);
+      setAllComments(result.post.comments);
+      setAmountComments(amountComments + 1);
+      setComment('');
     }
   };
 

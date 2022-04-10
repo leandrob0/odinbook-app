@@ -2,7 +2,6 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import { count } from '../helpers/countLikesComments';
 import { likePost } from '../services/posts';
 import { updatePost } from '../features/post';
 import { checkIfLiked } from '../helpers/checkIfLiked';
@@ -15,8 +14,8 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
 
   const { width } = useWindowDimensions();
   const [liked, setLiked] = useState(checkIfLiked(likes, loggedUser.id));
-  const [amountLikes, setAmountLikes] = useState(count(likes));
-  const [amountComments, setAmountComments] = useState(count(comments));
+  const [amountLikes, setAmountLikes] = useState(likes.length);
+  const [amountComments, setAmountComments] = useState(comments.length);
   const [showComments, setShowComments] = useState(false);
 
   const likePressed = async (e) => {
