@@ -29,7 +29,10 @@ exports.create_comment = async (req, res) => {
     )
       .populate('author')
       .populate('likes')
-      .populate('comments');
+      .populate({
+        path: 'comments',
+        populate: { path: 'author', model: User },
+      });
 
     // Returns the post with the new comment added, and every field needed.
     res.status(200).json({ post: postUpdated });
