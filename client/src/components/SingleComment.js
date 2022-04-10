@@ -1,16 +1,22 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { checkIfLiked } from '../helpers/checkIfLiked';
+import { likeComment } from '../services/comments';
 
 import { ThumbUpIcon } from '@heroicons/react/solid';
 
 const SingleComment = ({ comment }) => {
   const loggedUser = useSelector((state) => state.user.value);
-  const [liked, setLiked] = useState(
-    checkIfLiked(comment.likes, loggedUser.id)
-  );
+  const [liked, setLiked] = useState(comment.likes.includes(loggedUser.id));
   const [amountLikes, setAmountLikes] = useState(comment.likes.length);
+
+  const likePressed = async () => {
+    const result = await likeComment(JSON.parse(localStorage.getItem('token')),comment._id);
+
+    if(result.msg) {
+      alert(result.msg);
+    }
+  }
 
   return (
     <div className="flex w-full">
@@ -37,6 +43,7 @@ const SingleComment = ({ comment }) => {
         </div>
         <button
           onClick={() => {
+            likePressed();
             setLiked(!liked);
             setAmountLikes(liked ? amountLikes - 1 : amountLikes + 1);
           }}
