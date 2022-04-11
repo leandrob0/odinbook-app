@@ -14,7 +14,7 @@ const ModalNotif = ({ closeModalNotif }) => {
         className="bg-white shadow-md rounded absolute top-full right-0 z-10"
         id="dropdown-notif"
       >
-        <section className="flex flex-col">
+        <section className="flex flex-col max-h-80 overflow-y-scroll">
           {notifications.length === 0 ? (
             <p className='py-4 px-2'>There are no notifications for you!</p>
           ) : (

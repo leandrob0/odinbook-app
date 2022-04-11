@@ -8,7 +8,7 @@ const Comments = ({ postId, comments, amountComments, setAmountComments }) => {
 
   return (
     <section className="w-full mt-4">
-      <div className='max-h-96 overflow-scroll'>
+      <div className='max-h-96 overflow-y-scroll'>
       <div className="border-t w-full flex flex-col gap-4 items-center justify-center pt-4">
         {allComments.length > 0 ? (
           allComments.map((comment) => {
