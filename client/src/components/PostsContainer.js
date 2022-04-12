@@ -1,6 +1,5 @@
-import { useSelector , useDispatch} from 'react-redux';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-
+import { useSelector , useDispatch} from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +13,11 @@ import Loading from './Loading';
 
 function PostsContainer({ setModalOpen }) {
   const [loading, setLoading] = useState(false);
+  const { width } = useWindowDimensions();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { width } = useWindowDimensions();
+  
   const posts = useSelector((state) => state.post.value);
   const userPicture = useSelector((state) => state.user.value.profile_pic);
 
