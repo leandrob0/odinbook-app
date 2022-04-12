@@ -30,7 +30,7 @@ const userSlice = createSlice({
       };
     },
     addFriend: (state, action) => {
-      state.value.friends = state.value.friends.concat(action.payload);
+      state.value.friends = action.payload.friends;
       localStorage.setItem('user', JSON.stringify(state.value));
     }
   },

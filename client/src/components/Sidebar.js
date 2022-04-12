@@ -7,9 +7,9 @@ function Sidebar() {
 
   useEffect(() => {
     if(friendsFetched.length > 7) {
-      setFriends(friendsFetched.reverse().slice(0,7));
+      setFriends([...friendsFetched.slice(0,7)]);
     } else {
-      setFriends(friendsFetched.reverse());
+      setFriends([...friendsFetched]);
     }
   }, [friendsFetched])
 
@@ -31,8 +31,8 @@ const DesktopFriends = ({ friends }) => {
       {friends.map((friend) => {
         return (
           <a key={friend._id} className="flex my-2 items-center hover:cursor-pointer" href={'/profile/'+friend._id}>
-            <div className="pr-1">
-              <div className="bg-blue-600 rounded-full h-5 w-5"></div>
+            <div className="pr-1 flex-shrink-0">
+              <img src={friend.profile_pic} className="rounded-full h-7 w-7 "/>
             </div>
             <div className="pl-1">
               <p className="text-xs md:text-sm">{friend.first_name} {friend.last_name}</p>

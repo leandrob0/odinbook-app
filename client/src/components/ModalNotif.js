@@ -16,14 +16,12 @@ const ModalNotif = ({ closeModalNotif }) => {
       >
         <section className="flex flex-col max-h-80 overflow-y-scroll">
           {notifications.length === 0 ? (
-            <p className='py-4 px-2'>There are no notifications for you!</p>
+            <p className="py-4 px-2">There are no notifications for you!</p>
           ) : (
             notifications.map((noti) => {
-              if (noti.type === 'request') {
-                return <FriendRequest key={noti.id} id={noti.id} friend={noti.user}/>;
-              } else {
-                  return <p>Not done yet</p>
-              }
+              return (
+                <FriendRequest key={noti._id} id={noti._id} friend={noti} />
+              );
             })
           )}
         </section>

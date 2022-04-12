@@ -12,14 +12,13 @@ const FriendRequest = ({ id, friend }) => {
     e.stopPropagation();
 
     const token = JSON.parse(localStorage.getItem('token'));
-
+    
     dispatch(deleteNotification({ id }));
     const result = await handleFriendRequest(token, friend._id, status);
 
     if(result.msg) {
       alert(result.msg);
     } else {
-      console.log(result.user);
       dispatch(addFriend(result.user));
     }
   };

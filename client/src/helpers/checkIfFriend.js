@@ -1,7 +1,7 @@
-const checkFriend = (friendsArr, email) => {
+const checkFriend = (friendsArr, id) => {
     
-    for(let friend in friendsArr) {
-        if(friend.email === email) {
+    for(let i = 0; i < friendsArr.length; i++) {
+        if(friendsArr[i]._id === id) {
             return true;
         }
     }

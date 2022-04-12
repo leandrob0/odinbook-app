@@ -36,7 +36,7 @@ const SidebarProfile = ({ user }) => {
         </div>
       </div>
       {loggedUser.id !== user._id &&
-        !checkFriend(loggedUser.friends, user.email) &&
+        !checkFriend(loggedUser.friends, user._id) &&
         user && (
           <div
             onClick={() => friendRequest()}

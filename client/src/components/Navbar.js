@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
-import { addNotification } from '../features/notifications';
+import { addNotification, setNotifications } from '../features/notifications';
 import { getAllUsers, getFriendsRequests } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 
@@ -34,9 +34,7 @@ const Navbar = () => {
       );
       if (notifications.length !== requests.requests.friendRequests.length) {
         setNotificationCount(requests.requests.friendRequests.length - notifications.length);
-        for(let i = notifications.length; i < requests.requests.friendRequests.length; i++) {
-          dispatch(addNotification({user: requests.requests.friendRequests[i], type:'request'}));
-        }
+        dispatch(setNotifications(requests.requests.friendRequests));
       }
     };
     loadFriendRequests();
