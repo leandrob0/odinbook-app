@@ -12,7 +12,7 @@ const postSlice = createSlice({
     addPost: (state, action) => {
       const curPosts = state.value ? state.value : null;
       const updatedAr = curPosts
-        ? curPosts.concat(action.payload)
+        ? curPosts.unshift(action.payload)
         : [action.payload];
       state.value = updatedAr;
     },
