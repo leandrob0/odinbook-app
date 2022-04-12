@@ -61,7 +61,7 @@ const Profile = () => {
     <div>
       <Navbar />
       <main className={width < 800 ? 'flex flex-wrap bg-gray-100' : 'flex bg-gray-100'}>
-        {user && <SidebarProfile user={user} />}
+        {user && <SidebarProfile className={width < 800 ? 'w-full' : 'w-80'} user={user} />}
         <PostsContainer loading={loading} />
       </main>
     </div>

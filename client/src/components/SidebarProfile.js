@@ -13,7 +13,7 @@ const SidebarProfile = ({ user }) => {
       user._id
     );
 
-    if (!response.msg.includes("Friend request sent")) {
+    if (!response.msg.includes('Friend request sent')) {
       console.log(response.msg);
       setRequestStatus('There was an error!');
     } else {
@@ -22,7 +22,7 @@ const SidebarProfile = ({ user }) => {
   };
 
   return (
-    <aside className="flex flex-col items-center p-2 w-80 mt-5 mb-3 m-auto">
+    <aside className="flex flex-col items-center p-2 m-auto mt-5 mb-3">
       <div className="flex flex-col items-center">
         <div>
           <img
@@ -46,20 +46,23 @@ const SidebarProfile = ({ user }) => {
           </div>
         )}
       {requestStatus !== '' && <div>{requestStatus}</div>}
-      <div className="flex flex-wrap">
+      <h1 className="font-bold m-4">Friends: </h1>
+      <div className="flex flex-wrap justify-center items-center gap-4">
         {user.friends &&
-          user.friends.forEach((friend) => {
+          user.friends.map((friend) => {
             return (
-              <div className="relative">
+              <a href={"/profile/"+friend._id} className="flex items-center justify-center hover:cursor-pointer hover:scale-105 transition" key={friend._id}>
                 <img
                   alt="Friend profile"
-                  className="absolute w-full h-full z-0"
-                  src={friend.profile_pic}
+                  className="w-12 h-12"
+                  src={'/' + friend.profile_pic}
                 />
-                <h3 className="fixed bottom-0 left-0 right-0 z-10">
-                  {friend.first_name + ' ' + friend.last_name}
+                <h3 className="text-sm text-blue-600 hover:text-blue-800 transition">
+                  {friend.first_name}
+                  <br />
+                  {friend.last_name}
                 </h3>
-              </div>
+              </a>
             );
           })}
       </div>
