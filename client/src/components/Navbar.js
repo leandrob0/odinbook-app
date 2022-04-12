@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/user';
-import { addNotification, setNotifications } from '../features/notifications';
+import { setNotifications } from '../features/notifications';
 import { getAllUsers, getFriendsRequests } from '../services/users';
 import { addFullname } from '../helpers/addFullname';
 

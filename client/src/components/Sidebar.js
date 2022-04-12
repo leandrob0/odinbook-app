@@ -32,7 +32,7 @@ const DesktopFriends = ({ friends }) => {
         return (
           <a key={friend._id} className="flex my-2 items-center hover:cursor-pointer" href={'/profile/'+friend._id}>
             <div className="pr-1 flex-shrink-0">
-              <img src={friend.profile_pic} className="rounded-full h-7 w-7 "/>
+              <img alt="friend" src={friend.profile_pic} className="rounded-full h-7 w-7 "/>
             </div>
             <div className="pl-1">
               <p className="text-xs md:text-sm">{friend.first_name} {friend.last_name}</p>
