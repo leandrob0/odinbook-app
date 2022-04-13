@@ -90,3 +90,14 @@ export const handleFriendRequest = async (token, id, status) => {
     return err.response.data;
   }
 };
+
+export const changeUserPhoto = async (token, data) => {
+  try {
+    const result = await axios.put(`${baseUrl}/change_photo`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
