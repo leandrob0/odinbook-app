@@ -11,9 +11,11 @@ import { logout } from '../../features/user';
 import Navbar from '../Navbar';
 import SidebarProfile from '../SidebarProfile';
 import PostsContainer from '../PostsContainer';
+import CreatePost from '../CreatePost';
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [user, setUser] = useState('');
   const { id } = useParams();
   const { width } = useWindowDimensions();
@@ -62,7 +64,8 @@ const Profile = () => {
       <Navbar />
       <main className={width < 800 ? 'flex flex-wrap bg-gray-100' : 'flex bg-gray-100'}>
         {user && <SidebarProfile className={width < 800 ? 'w-full' : 'w-80'} user={user} />}
-        <PostsContainer loading={loading} />
+        <PostsContainer setModalOpen={setModalOpen} loading={loading} />
+        {modalOpen && <CreatePost setModalOpen={setModalOpen} />}
       </main>
     </div>
   );

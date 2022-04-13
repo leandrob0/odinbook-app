@@ -9,13 +9,6 @@ const postSlice = createSlice({
     setPosts: (state, action) => {
       state.value = action.payload;
     },
-    addPost: (state, action) => {
-      const curPosts = state.value ? state.value : null;
-      const updatedAr = curPosts
-        ? curPosts.unshift(action.payload)
-        : [action.payload];
-      state.value = updatedAr;
-    },
     updatePost: (state, action) => {
       const curPosts = state.value;
       for (let i = 0; i < curPosts; i++) {
@@ -28,5 +21,5 @@ const postSlice = createSlice({
   },
 });
 
-export const { setPosts, addPost, updatePost } = postSlice.actions;
+export const { setPosts, updatePost } = postSlice.actions;
 export default postSlice.reducer;

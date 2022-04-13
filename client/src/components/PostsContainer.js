@@ -1,44 +1,14 @@
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import { useSelector , useDispatch} from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { getTimelinePosts } from '../services/posts';
-
-import { logout } from '../features/user';
-import { setPosts } from '../features/post';
+import { useSelector } from 'react-redux';
 
 import SinglePost from './SinglePost';
 import Loading from './Loading';
 
-function PostsContainer({ setModalOpen }) {
-  const [loading, setLoading] = useState(false);
+function PostsContainer({ setModalOpen , loading }) {
   const { width } = useWindowDimensions();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const posts = useSelector((state) => state.post.value);
   const userPicture = useSelector((state) => state.user.value.profile_pic);
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      setLoading(true);
-      const result = await getTimelinePosts(
-        JSON.parse(localStorage.getItem('token'))
-      );
-
-      if (result.msg) {
-        alert('Your session expired, please log in again.');
-        dispatch(logout());
-        return navigate('/');
-      } else {
-        setLoading(false);
-        dispatch(setPosts(result.posts));
-      }
-    };
-    loadPosts();
-  }, [dispatch, navigate]);
 
   return (
     <section className="w-full min-h-screen max-w-screen-xl flex flex-col items-center">

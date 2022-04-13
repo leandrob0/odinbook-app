@@ -6,7 +6,6 @@ export const createPost = async (token, body) => {
     const result = await axios.post(`${baseUrl}/new_post`, body, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(result.data);
     return result.data;
   } catch (err) {
     return err.response.data;

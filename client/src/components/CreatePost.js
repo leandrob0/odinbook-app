@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { createPost } from '../services/posts';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch , useSelector } from 'react-redux';
-import { addPost } from '../features/post';
+import { useSelector } from 'react-redux';
 
 const CreatePost = ({ setModalOpen }) => {
   const [formValues, setFormValues] = useState({
@@ -11,7 +10,6 @@ const CreatePost = ({ setModalOpen }) => {
     name: '',
   });
   const userPicture = useSelector((state) => state.user.value.profile_pic);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -31,9 +29,8 @@ const CreatePost = ({ setModalOpen }) => {
     if (result.msg) {
       console.log(result.msg);
     } else {
-      dispatch(addPost(result.post));
       setModalOpen(false);
-      return navigate('/timeline');
+      return navigate(0);
     }
   };
 
