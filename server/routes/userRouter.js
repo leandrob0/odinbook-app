@@ -41,4 +41,7 @@ router.put('/friend_request/:id', authorizeUser, userController.friend_request);
 // PUT Accepts an id from the user that sent the request, and a status of accepted or not, returns the user with the friend added or the request removed.
 router.put('/handle_request/:id', authorizeUser, userController.handle_request);
 
+// PUT Changes the profile pic attribute of the user and returns it.
+router.put('/change_photo', authorizeUser, userController.change_photo);
+
 module.exports = router;

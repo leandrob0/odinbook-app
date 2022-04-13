@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
+const upload = require('../config/multer');
 const User = require('../models/user');
-//const { body, validationResult } = require('express-validator');
 
 // This will work for the searching later, probably will have an state that saves the users for searching.
 exports.all_users = async (req, res) => {
@@ -114,3 +114,21 @@ exports.info_by_id = async (req, res) => {
   const info = await User.findById(req.params.id).populate('friends');
   res.status(200).json({ info });
 };
+
+exports.change_photo = [
+  upload.single('file'),
+
+  async (req, res) => {
+    if (!req.file) {
+      res.status(400).json({ msg: 'A file must be sent,' });
+    }
+
+    req.user.profile_pic = req.file.path;
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.user, {
+      new: true,
+    });
+
+    res.status(200).json({ user: updatedUser });
+  },
+];
