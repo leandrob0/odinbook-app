@@ -27,7 +27,7 @@ const SidebarProfile = ({ user }) => {
         <div>
           <img
             alt="User profile"
-            className="h-20 w-20 md:h-32 md:w-32 rounded-full"
+            className="h-20 w-20 md:h-32 md:w-32 m-2 rounded-full"
             src={user.profile_pic}
           />
         </div>
@@ -55,7 +55,7 @@ const SidebarProfile = ({ user }) => {
                 <img
                   alt="Friend profile"
                   className="w-12 h-12"
-                  src={'/' + friend.profile_pic}
+                  src={friend.profile_pic}
                 />
                 <h3 className="text-sm text-blue-600 hover:text-blue-800 transition">
                   {friend.first_name}
