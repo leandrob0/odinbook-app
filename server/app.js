@@ -40,7 +40,17 @@ const errors = require('./middleware/errorHandler');
 app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
 
-const PORT = process.env.PORT;
+// Deployment
+// eslint-disable-next-line no-global-assign
+__dirname = path.resolve();
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+const PORT = process.env.PORT || 4005;
 server.listen(PORT, () => {
   console.log(`Listening on Port: ${PORT}`);
 });
