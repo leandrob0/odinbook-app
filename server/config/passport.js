@@ -68,10 +68,9 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       // User could not have an email associated to its account, so we return an error.
-      console.log(profile);
       if (!profile._json.email) {
         return done(null, false, {
-          message:
+          msg:
             // eslint-disable-next-line quotes
             "Facebook account doens't have an email associated, please log in using other methods",
         });
@@ -82,15 +81,13 @@ passport.use(
           first_name: profile._json.first_name,
           last_name: profile._json.last_name,
           email: profile._json.email,
-          profilePicUrl: profile.photos[0].value,
+          profile_pic: profile.photos[0].value,
           friends: [],
-          posts: [],
           friendRequests: [],
         }
       )
-        .populate('friends')
-        .populate('friendRequests')
         .then((user) => {
+          user.token = accessToken;
           return done(null, user);
         })
         .catch((err) => {

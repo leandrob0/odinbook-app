@@ -28,7 +28,7 @@ const SidebarProfile = ({ user }) => {
           <img
             alt="User profile"
             className="h-20 w-20 md:h-32 md:w-32 rounded-full"
-            src={'/' + user.profile_pic}
+            src={user.profile_pic}
           />
         </div>
         <div className="text-center py-2">

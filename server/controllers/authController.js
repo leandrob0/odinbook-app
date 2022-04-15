@@ -37,7 +37,7 @@ exports.register = [
         password: pw,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        profile_pic: 'public/images/blank_profile_picture.png',
+        profile_pic: '/public/images/blank_profile_picture.png',
         friends: [],
         friendRequests: [],
       });
@@ -75,11 +75,8 @@ exports.login_local = (req, res, next) => {
 exports.login_facebook = (req, res) => {
   if (req.user) {
     const user = req.user;
-    const token = jwt.sign({ user }, process.env.SECRET_KEY, {
-      expiresIn: '1d',
-    });
 
-    return res.status(200).json({ user, token });
+    return res.status(200).json({ user, token: user.token });
   } else {
     return res.status(401).json({ msg: 'User not found' });
   }

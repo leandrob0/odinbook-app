@@ -30,7 +30,7 @@ const FriendRequest = ({ id, friend }) => {
           <img
             className="rounded-full h-10 w-10"
             alt="Friend"
-            src={'/' + friend.profile_pic}
+            src={friend.profile_pic}
           />
         </div>
         <div className="p-2 flex flex-col justify-between">

@@ -23,7 +23,7 @@ const ModalSearch = ({ users, setModalSearch  }) => {
               >
                 <img
                   alt="User profile"
-                  src={"/"+user.profile_pic}
+                  src={user.profile_pic}
                   className="rounded-full w-7 h-7"
                 />
                 <p className="text-xs md:text-sm pl-3">{user.fullname}</p>

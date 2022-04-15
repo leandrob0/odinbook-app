@@ -71,8 +71,9 @@ const Login = () => {
 
   const loginFacebook = async (res) => {
     const response = await loginUserFacebook(res.accessToken);
+    console.log(response.user.doc);
     if (response.user) {
-      setValues(response.user, response.token);
+      setValues(response.user.doc, response.token);
       return navigate('/timeline');
     } else {
       setErrors({ msg: response.msg });

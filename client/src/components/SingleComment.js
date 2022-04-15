@@ -27,7 +27,7 @@ const SingleComment = ({ comment }) => {
         <img
           alt="comment author"
           className="h-10 w-10 rounded-full"
-          src={'/' + comment.author.profile_pic}
+          src={comment.author.profile_pic}
         />
       </a>
       <div>

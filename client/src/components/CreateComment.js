@@ -38,7 +38,7 @@ const CreateComment = ({
         href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}
       >
         <img
-          src={'/' + userPicture}
+          src={userPicture}
           alt="author"
           className="h-10 w-10 rounded-full"
         />
