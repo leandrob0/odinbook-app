@@ -62,7 +62,7 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-      <main className={width < 800 ? 'flex flex-wrap bg-gray-100' : 'flex bg-gray-100'}>
+      <main className={width < 800 ? 'flex flex-wrap bg-gray-100 relative' : 'flex bg-gray-100 relative'}>
         {user && <SidebarProfile className={width < 800 ? 'w-full' : 'w-80'} user={user} />}
         <PostsContainer setModalOpen={setModalOpen} loading={loading} />
         {modalOpen && <CreatePost setModalOpen={setModalOpen} />}

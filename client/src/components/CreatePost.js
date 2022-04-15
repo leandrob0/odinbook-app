@@ -37,12 +37,12 @@ const CreatePost = ({ setModalOpen }) => {
   return (
     <div
       onClick={() => setModalOpen(false)}
-      className="h-screen w-screen bg-white bg-opacity-70 flex justify-center items-center absolute"
+      className="absolute inset-0 bg-white bg-opacity-70 flex justify-center items-start"
     >
       <form
         onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => handleSubmit(e)}
-        className="m-4 border rounded bg-white shadow-md flex flex-col items-center"
+        className="m-4 fixed border rounded bg-white shadow-md flex flex-col items-center"
       >
         <div className="flex justify-center p-2 border-b border-b-gray-300 w-full">
           <h2 className="font-bold text-lg">Create Post</h2>
