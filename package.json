@@ -1,0 +1,20 @@
+{
+  "name": "odinbook-app",
+  "version": "1.0.0",
+  "description": "Under development.",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandrob0/odinbook-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leandrob0/odinbook-app/issues"
+  },
+  "homepage": "https://github.com/leandrob0/odinbook-app#readme"
+}
