@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { axiosInstance } from "../config";
 const baseUrl = '/api/posts';
 
 export const createPost = async (token, body) => {
   try {
-    const result = await axios.post(`${baseUrl}/new_post`, body, {
+    const result = await axiosInstance.post(`${baseUrl}/new_post`, body, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -14,7 +14,7 @@ export const createPost = async (token, body) => {
 
 export const getTimelinePosts = async (token) => {
   try {
-    const result = await axios.get(`${baseUrl}/timeline`, {
+    const result = await axiosInstance.get(`${baseUrl}/timeline`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -25,7 +25,7 @@ export const getTimelinePosts = async (token) => {
 
 export const getPostsFromUser = async (token, id) => {
   try {
-    const result = await axios.get(`${baseUrl}/${id}`, {
+    const result = await axiosInstance.get(`${baseUrl}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -36,7 +36,7 @@ export const getPostsFromUser = async (token, id) => {
 
 export const likePost = async (token, id) => {
   try {
-    const result = await axios.put(
+    const result = await axiosInstance.put(
       `${baseUrl}/like/${id}`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }

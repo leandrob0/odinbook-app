@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { axiosInstance } from "../config";
 const baseUrl = '/api/users';
 
 export const registerUser = async (body) => {
   try {
-    const result = await axios.post(`${baseUrl}/register`, body);
+    const result = await axiosInstance.post(`${baseUrl}/register`, body);
     return result.data;
   } catch (err) {
     return err.response.data;
@@ -12,7 +12,7 @@ export const registerUser = async (body) => {
 
 export const loginUserLocal = async (body) => {
   try {
-    const result = await axios.post(`${baseUrl}/login/local`, body);
+    const result = await axiosInstance.post(`${baseUrl}/login/local`, body);
     return result.data;
   } catch (err) {
     return err.response.data;
@@ -21,7 +21,7 @@ export const loginUserLocal = async (body) => {
 
 export const loginUserFacebook = async (token) => {
   try {
-    const result = await axios.post(`${baseUrl}/login/facebook`, null, {
+    const result = await axiosInstance.post(`${baseUrl}/login/facebook`, null, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -32,7 +32,7 @@ export const loginUserFacebook = async (token) => {
 
 export const getAllUsers = async (token) => {
   try {
-    const result = await axios.get(`${baseUrl}`, {
+    const result = await axiosInstance.get(`${baseUrl}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -43,7 +43,7 @@ export const getAllUsers = async (token) => {
 
 export const getUserInfo = async (token, id) => {
   try {
-    const result = await axios.get(`${baseUrl}/info/${id}`, {
+    const result = await axiosInstance.get(`${baseUrl}/info/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -54,7 +54,7 @@ export const getUserInfo = async (token, id) => {
 
 export const getFriendsRequests = async (token) => {
   try {
-    const result = await axios.get(`${baseUrl}/requests`, {
+    const result = await axiosInstance.get(`${baseUrl}/requests`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
@@ -65,7 +65,7 @@ export const getFriendsRequests = async (token) => {
 
 export const sendFriendRequest = async (token, id) => {
   try {
-    const result = await axios.put(
+    const result = await axiosInstance.put(
       `${baseUrl}/friend_request/${id}`,
       {},
       {
@@ -80,7 +80,7 @@ export const sendFriendRequest = async (token, id) => {
 
 export const handleFriendRequest = async (token, id, status) => {
   try {
-    const result = await axios.put(
+    const result = await axiosInstance.put(
       `${baseUrl}/handle_request/${id}`,
       { status },
       { headers: { Authorization: `Bearer ${token}` } }
@@ -93,7 +93,7 @@ export const handleFriendRequest = async (token, id, status) => {
 
 export const changeUserPhoto = async (token, data) => {
   try {
-    const result = await axios.put(`${baseUrl}/change_photo`, data, {
+    const result = await axiosInstance.put(`${baseUrl}/change_photo`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return result.data;
