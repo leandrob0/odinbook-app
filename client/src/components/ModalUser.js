@@ -34,12 +34,6 @@ const ModalUser = ({ closeModalUser }) => {
             Profile
           </p>
           <p
-            onClick={(e) => console.log('Under development')}
-            className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition"
-          >
-            Settings
-          </p>
-          <p
             onClick={(e) => logoutClick(e)}
             className="block text-sm py-1 px-4 w-full hover:bg-gray-100 hover:cursor-pointer transition"
           >

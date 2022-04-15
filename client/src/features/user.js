@@ -32,9 +32,13 @@ const userSlice = createSlice({
     addFriend: (state, action) => {
       state.value.friends = action.payload.friends;
       localStorage.setItem('user', JSON.stringify(state.value));
+    },
+    changePhoto: (state, action) => {
+      state.value.profile_pic = action.payload.url;
+      localStorage.setItem('user', JSON.stringify(state.value));
     }
   },
 });
 
-export const { login, logout , addFriend } = userSlice.actions;
+export const { login, logout , addFriend , changePhoto} = userSlice.actions;
 export default userSlice.reducer;
