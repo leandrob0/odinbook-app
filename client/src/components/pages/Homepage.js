@@ -42,14 +42,6 @@ const Homepage = () => {
             target="_blank"
           >
             Leandro Bovino
-          </a>{' '}
-          and{' '}
-          <a
-            href="https://www.linkedin.com/in/jld1"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Julio Dechert
           </a>
         </div>
       </footer>
