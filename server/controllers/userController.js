@@ -123,7 +123,7 @@ exports.change_photo = [
       res.status(400).json({ msg: 'A file must be sent,' });
     }
 
-    req.user.profile_pic = req.file.path;
+    req.user.profile_pic = '/' + req.file.path;
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, req.user, {
       new: true,
