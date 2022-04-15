@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const authorizeUser = (req, res, next) => {
   passport.authenticate(['jwt','facebook-token'], { session: false }, (error, token) => {
-    req.user = token.doc;
+    req.user = (token.doc ? token.doc : token);
     if (error) {
       return res.status(403).json({ msg: 'Token expired' });
     }
