@@ -13,7 +13,11 @@ const connectDb = require('./config/db');
 
 connectDb();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://odinbook-top.herokuapp.com/',
+  })
+);
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
@@ -27,6 +31,14 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 const passport = require('./config/passport');
 app.use(passport.initialize());
 
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    'script-src \'self\' https://connect.facebook.net/en_US/sdk.js'
+  );
+  return next();
+});
+
 // Routes setup
 const userRouter = require('./routes/userRouter');
 const postsRouter = require('./routes/postRouter');
@@ -35,17 +47,16 @@ app.use('/api/users', userRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/comments', commentsRouter);
 
+// Deployment
+app.use(express.static(path.join(__dirname, '/client/build')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '/client/build/index.html'));
+});
+
 // Errors handlers
 const errors = require('./middleware/errorHandler');
 app.use(errors.errorHandler);
 app.use(errors.unknownEndpoint);
-
-// Deployment
-app.use(express.static(path.join(__dirname, '/client/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '/client/build', 'index.html'));
-});
-
 
 const PORT = process.env.PORT || 4005;
 server.listen(PORT, () => {

@@ -87,7 +87,7 @@ const SidebarProfile = ({ user }) => {
           user.friends.map((friend) => {
             return (
               <a
-                href={'/profile/' + friend._id}
+                href={'/#/profile/' + friend._id}
                 className="flex items-center justify-center hover:cursor-pointer hover:scale-105 transition"
                 key={friend._id}
               >

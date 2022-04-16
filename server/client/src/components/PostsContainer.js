@@ -19,7 +19,7 @@ function PostsContainer({ setModalOpen , loading }) {
       >
         <a
           className="hover:cursor-pointer"
-          href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}
+          href={'/#/profile/' + JSON.parse(localStorage.getItem('user')).id}
         >
           <img
             src={userPicture}

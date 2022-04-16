@@ -19,7 +19,7 @@ const ModalSearch = ({ users, setModalSearch  }) => {
                 key={user._id}
                 id={user._id}
                 className="flex m-4 items-center"
-                href={'/profile/' + user._id}
+                href={'/#/profile/' + user._id}
               >
                 <img
                   alt="User profile"

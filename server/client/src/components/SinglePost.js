@@ -35,7 +35,7 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
       } flex flex-col items-start m-4 bg-white rounded p-4`}
     >
       <div className="flex justify-center items-center">
-        <a className="hover:cursor-pointer" href={'/profile/' + author._id}>
+        <a className="hover:cursor-pointer" href={'/#/profile/' + author._id}>
           <img
             src={author.profile_pic}
             alt="author"

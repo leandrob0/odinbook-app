@@ -22,7 +22,7 @@ const SingleComment = ({ comment }) => {
     <div className="flex w-full">
       <a
         className="hover:cursor-pointer flex-shrink-0"
-        href={'/profile/' + comment.author._id}
+        href={'/#/profile/' + comment.author._id}
       >
         <img
           alt="comment author"

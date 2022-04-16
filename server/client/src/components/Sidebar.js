@@ -30,7 +30,7 @@ const DesktopFriends = ({ friends }) => {
     <section className="flex flex-col items-start">
       {friends.map((friend) => {
         return (
-          <a key={friend._id} className="flex my-2 items-center hover:cursor-pointer" href={'/profile/'+friend._id}>
+          <a key={friend._id} className="flex my-2 items-center hover:cursor-pointer" href={'/#/profile/'+friend._id}>
             <div className="pr-1 flex-shrink-0">
               <img alt="friend" src={friend.profile_pic} className="rounded-full h-7 w-7 "/>
             </div>

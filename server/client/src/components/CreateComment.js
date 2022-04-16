@@ -35,7 +35,7 @@ const CreateComment = ({
     <div className="flex items-center bg-white rounded-md pt-4 w-full">
       <a
         className="hover:cursor-pointer flex-shrink-0"
-        href={'/profile/' + JSON.parse(localStorage.getItem('user')).id}
+        href={'/#/profile/' + JSON.parse(localStorage.getItem('user')).id}
       >
         <img
           src={userPicture}
