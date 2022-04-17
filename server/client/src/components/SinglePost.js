@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { likePost } from '../services/posts';
 import { updatePost } from '../features/post';
 import { checkIfLiked } from '../helpers/checkIfLiked';
+import { formatDate } from '../helpers/formatDate';
 
 import Comments from './Comments';
 
@@ -44,7 +45,7 @@ function SinglePost({ author, post }) {
         </a>
         <div className="flex flex-col items-center p-2">
           <p>{author.first_name + ' ' + author.last_name}</p>
-          <p className="text-xs text-gray-500">{post.createdAt}</p>
+          <p className="text-xs text-gray-500">{formatDate(post.createdAt)}</p>
         </div>
       </div>
       <div>
