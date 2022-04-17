@@ -126,7 +126,7 @@ const Login = () => {
         callback={loginFacebook}
         render={(renderProps) => (
           <button
-            onClick={renderProps.onClick}
+            onClick={/* renderProps.onClick */ () => alert('This functionality is temporarily disabled.')}
             className="border-2 rounded p-2 m-2 mb-3 text-black font-bold bg-white hover:shadow-md transition w-72 flex justify-center items-center hover:cursor-pointer lg:w-96"
           >
             <img
