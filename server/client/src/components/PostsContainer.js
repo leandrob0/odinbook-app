@@ -41,12 +41,8 @@ function PostsContainer({ setModalOpen , loading }) {
           return (
             <SinglePost
               key={post._id}
-              postId={post._id}
               author={post.author}
-              text={post.text}
-              likes={post.likes}
-              comments={post.comments}
-              attached_image={post.attached_image}
+              post={post}
             />
           );
         })}

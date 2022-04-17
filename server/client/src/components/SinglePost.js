@@ -8,14 +8,14 @@ import { checkIfLiked } from '../helpers/checkIfLiked';
 
 import Comments from './Comments';
 
-function SinglePost({ postId, author, text, likes, comments, attached_image }) {
+function SinglePost({ author, post }) {
   const loggedUser = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
   const { width } = useWindowDimensions();
-  const [liked, setLiked] = useState(checkIfLiked(likes, loggedUser.id));
-  const [amountLikes, setAmountLikes] = useState(likes.length);
-  const [amountComments, setAmountComments] = useState(comments.length);
+  const [liked, setLiked] = useState(checkIfLiked(post.likes, loggedUser.id));
+  const [amountLikes, setAmountLikes] = useState(post.likes.length);
+  const [amountComments, setAmountComments] = useState(post.comments.length);
   const [showComments, setShowComments] = useState(false);
 
   const likePressed = async (e) => {
@@ -23,7 +23,7 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
 
     const result = await likePost(
       JSON.parse(localStorage.getItem('token')),
-      postId
+      post._id
     );
     dispatch(updatePost(result));
   };
@@ -44,17 +44,17 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
         </a>
         <div className="flex flex-col items-center p-2">
           <p>{author.first_name + ' ' + author.last_name}</p>
-          <p className="text-xs text-gray-500">03/17/2022 at 12:35</p>
+          <p className="text-xs text-gray-500">{post.createdAt}</p>
         </div>
       </div>
       <div>
-        <p className="text-base">{text}</p>
+        <p className="text-base">{post.text}</p>
       </div>
-      {attached_image && (
+      {post.attached_image && (
         <div className="py-4">
           <img
             className="w-full aspect-video"
-            src={'/' + attached_image}
+            src={'/' + post.attached_image}
             alt="post content"
           />
         </div>
@@ -90,8 +90,8 @@ function SinglePost({ postId, author, text, likes, comments, attached_image }) {
       </div>
       {showComments && (
         <Comments
-          postId={postId}
-          comments={comments}
+          postId={post._id}
+          comments={post.comments}
           amountComments={amountComments}
           setAmountComments={setAmountComments}
         />
