@@ -41,7 +41,10 @@ exports.self_posts = async (req, res) => {
   const posts = await Post.find({ author: req.params.id })
     .populate('author')
     .populate('likes')
-    .populate('comments');
+    .populate({
+      path: 'comments',
+      populate: { path: 'author', model: User },
+    });
 
   // I pass it an empty array, because this function merges two arrays and does the rest.
   // So if i pass an empty array, the original one wont change.
